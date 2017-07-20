@@ -1,12 +1,15 @@
 PODS:
+  - Masonry (1.0.2)
   - XMLDictionary (1.4.1)
 
 DEPENDENCIES:
+  - Masonry
   - XMLDictionary
 
 SPEC CHECKSUMS:
+  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   XMLDictionary: fa07b6ff422b3a91d47a5de9bc82e3fc04fbd167
 
-PODFILE CHECKSUM: a1aa1c36bd8525a1387b2431f35f023e1699b2d9
+PODFILE CHECKSUM: 18f220417e6ec71ad171caf45d90cf71fa46cda0
 
 COCOAPODS: 1.2.1

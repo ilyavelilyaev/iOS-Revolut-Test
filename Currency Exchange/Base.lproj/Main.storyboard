@@ -171,8 +171,23 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2u6-cT-ETL">
                                 <rect key="frame" x="0.0" y="129" width="375" height="169"/>
+                                <subviews>
+                                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="zeV-d3-bgu">
+                                        <rect key="frame" x="168" y="124" width="39" height="37"/>
+                                    </pageControl>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gat-ud-zwO" customClass="CurrencyExchangePageView">
+                                        <rect key="frame" x="0.0" y="8" width="375" height="116"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="zeV-d3-bgu" secondAttribute="bottom" constant="8" id="5cB-iJ-gMz"/>
+                                    <constraint firstAttribute="trailing" secondItem="gat-ud-zwO" secondAttribute="trailing" id="KqC-kR-m1f"/>
+                                    <constraint firstItem="zeV-d3-bgu" firstAttribute="top" secondItem="gat-ud-zwO" secondAttribute="bottom" id="Q6o-bI-o7T"/>
+                                    <constraint firstItem="zeV-d3-bgu" firstAttribute="centerX" secondItem="2u6-cT-ETL" secondAttribute="centerX" id="Sbx-Qy-Gk8"/>
+                                    <constraint firstItem="gat-ud-zwO" firstAttribute="leading" secondItem="2u6-cT-ETL" secondAttribute="leading" id="U3E-et-lBW"/>
+                                    <constraint firstItem="gat-ud-zwO" firstAttribute="top" secondItem="2u6-cT-ETL" secondAttribute="top" constant="8" id="VJN-w7-IcI"/>
                                     <constraint firstAttribute="height" constant="169" id="yxC-gt-NDZ"/>
                                 </constraints>
                             </view>
@@ -192,11 +207,16 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="46"/>
                                         <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                     </textField>
+                                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="fzN-BC-Vve">
+                                        <rect key="frame" x="168" y="124" width="39" height="37"/>
+                                    </pageControl>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="8q5-P9-sBf" secondAttribute="bottom" id="5Pw-Mm-ORd"/>
+                                    <constraint firstItem="fzN-BC-Vve" firstAttribute="centerX" secondItem="YCf-qK-aFd" secondAttribute="centerX" id="HVW-SW-OHx"/>
                                     <constraint firstItem="8q5-P9-sBf" firstAttribute="top" secondItem="YCf-qK-aFd" secondAttribute="top" id="IG6-XZ-qfj"/>
+                                    <constraint firstAttribute="bottom" secondItem="fzN-BC-Vve" secondAttribute="bottom" constant="8" id="JWV-UA-n6t"/>
                                     <constraint firstAttribute="trailing" secondItem="8q5-P9-sBf" secondAttribute="trailing" id="YRW-tw-9pz"/>
                                     <constraint firstItem="8q5-P9-sBf" firstAttribute="leading" secondItem="YCf-qK-aFd" secondAttribute="leading" id="dz0-53-mMk"/>
                                     <constraint firstItem="p1C-Ta-amA" firstAttribute="centerY" secondItem="YCf-qK-aFd" secondAttribute="centerY" id="nJr-ZW-8es"/>
@@ -225,11 +245,13 @@
                     </view>
                     <connections>
                         <outlet property="bottomBoxBottomConstraint" destination="wrs-PA-S8s" id="6bS-y6-wI5"/>
+                        <outlet property="bottomPageControl" destination="fzN-BC-Vve" id="cZi-08-Gej"/>
                         <outlet property="exchangeBoxHeightConstraint" destination="yxC-gt-NDZ" id="Z2Y-Zs-PeQ"/>
                         <outlet property="exchangeButton" destination="2IL-pD-zoZ" id="ULs-is-J6D"/>
                         <outlet property="temp" destination="p1C-Ta-amA" id="gKI-kf-5mD"/>
                         <outlet property="topCurrencyBoxExchangeRateLabel" destination="mJJ-a8-8MB" id="nSE-Kh-Eky"/>
                         <outlet property="topCurrencyBoxView" destination="96H-0A-gh5" id="Itn-ZC-izC"/>
+                        <outlet property="topPageControl" destination="zeV-d3-bgu" id="gcS-J4-wdo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

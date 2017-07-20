@@ -19,6 +19,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *exchangeButton;
 @property (weak, nonatomic) IBOutlet UILabel *topCurrencyBoxExchangeRateLabel;
 
+@property (weak, nonatomic) IBOutlet UIPageControl *topPageControl;
+@property (weak, nonatomic) IBOutlet UIPageControl *bottomPageControl;
+
+
 @end
 
 @implementation CurrencyExchangeViewController
@@ -77,8 +81,6 @@
     if (screenWidth < 375) {
         [self.exchangeButton.titleLabel setFont:[exchangeButtonFont fontWithSize:15]];
     }
-
-
 
 }
 
