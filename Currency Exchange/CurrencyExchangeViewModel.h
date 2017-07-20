@@ -7,7 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CurrencyExchangePageView.h"
 
 @interface CurrencyExchangeViewModel : NSObject
+<CurrencyExchangePageViewDataSource, CurrencyExchangePageViewDelegate>
+
+
+
 
 @end

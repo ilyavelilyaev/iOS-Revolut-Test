@@ -7,11 +7,12 @@
 //
 
 #import "CurrencyExchangeViewController.h"
+#import "CurrencyExchangePageView.h"
+#import "CurrencyExchangeViewModel.h"
 
 @interface CurrencyExchangeViewController ()
 
 @property (weak, nonatomic) IBOutlet UIView *topCurrencyBoxView;
-@property (weak, nonatomic) IBOutlet UITextField *temp;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomBoxBottomConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *exchangeBoxHeightConstraint;
@@ -22,6 +23,10 @@
 @property (weak, nonatomic) IBOutlet UIPageControl *topPageControl;
 @property (weak, nonatomic) IBOutlet UIPageControl *bottomPageControl;
 
+@property (weak, nonatomic) IBOutlet CurrencyExchangePageView *topExchangePageView;
+@property (weak, nonatomic) IBOutlet CurrencyExchangePageView *bottomExchangePageView;
+
+@property (nonatomic) CurrencyExchangeViewModel *viewModel;
 
 @end
 
@@ -38,7 +43,9 @@
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
 
-    [self.temp becomeFirstResponder];
+    self.viewModel = [[CurrencyExchangeViewModel alloc] init];
+    self.topExchangePageView.dataSource = self.viewModel;
+    [self.topExchangePageView reloadData];
 }
 
 -(void)viewDidLayoutSubviews {

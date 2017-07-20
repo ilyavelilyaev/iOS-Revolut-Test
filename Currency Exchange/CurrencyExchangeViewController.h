@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CurrencyExchangeViewController : UIViewController
+@interface CurrencyExchangeViewController : UIViewController 
 
 @end

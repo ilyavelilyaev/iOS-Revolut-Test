@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CurrencyExchangePageViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="321" height="147"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZHv-Yv-lad">
+                    <rect key="frame" x="144.5" y="0.0" width="176.5" height="147"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="eM4-C1-CPO">
+                            <rect key="frame" x="10" y="36" width="136.5" height="75.5"/>
+                            <subviews>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="- 183" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hBk-DY-4Q2">
+                                    <rect key="frame" x="0.0" y="0.0" width="136.5" height="55"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="46"/>
+                                    <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                    <connections>
+                                        <action selector="textFieldChangedEditing:" destination="iN0-l3-epB" eventType="editingChanged" id="erV-8A-RJL"/>
+                                    </connections>
+                                </textField>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have $100.23" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A7G-Ty-oDl">
+                                    <rect key="frame" x="0.0" y="55" width="136.5" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="eM4-C1-CPO" secondAttribute="trailing" constant="30" id="Fg0-B5-5UK"/>
+                        <constraint firstItem="eM4-C1-CPO" firstAttribute="leading" secondItem="ZHv-Yv-lad" secondAttribute="leading" constant="10" id="Tw5-oY-OED"/>
+                        <constraint firstItem="eM4-C1-CPO" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ZHv-Yv-lad" secondAttribute="top" constant="10" id="ivL-pZ-2Nd"/>
+                        <constraint firstItem="eM4-C1-CPO" firstAttribute="centerY" secondItem="ZHv-Yv-lad" secondAttribute="centerY" id="rBl-8A-AOx"/>
+                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="eM4-C1-CPO" secondAttribute="bottom" constant="10" id="z7P-dP-2Tg"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZV2-RC-o2a">
+                    <rect key="frame" x="0.0" y="0.0" width="144.5" height="147"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="AvT-pU-XnC">
+                            <rect key="frame" x="30" y="36" width="114.5" height="75.5"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GBP" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oOg-Bb-Fmy">
+                                    <rect key="frame" x="0.0" y="0.0" width="89.5" height="55"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="46"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have $100.23" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FNv-1q-Jw9">
+                                    <rect key="frame" x="0.0" y="55" width="114.5" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="AvT-pU-XnC" firstAttribute="centerY" secondItem="ZV2-RC-o2a" secondAttribute="centerY" id="0V0-iv-4BW"/>
+                        <constraint firstAttribute="trailing" secondItem="AvT-pU-XnC" secondAttribute="trailing" id="24z-0J-1t4"/>
+                        <constraint firstItem="AvT-pU-XnC" firstAttribute="leading" secondItem="ZV2-RC-o2a" secondAttribute="leading" constant="30" id="8E8-hR-zR8"/>
+                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="AvT-pU-XnC" secondAttribute="bottom" constant="10" id="AzW-ah-1gY"/>
+                        <constraint firstItem="AvT-pU-XnC" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ZV2-RC-o2a" secondAttribute="top" constant="10" id="zdA-U8-Tev"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="ZHv-Yv-lad" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="6Z9-M9-QLL"/>
+                <constraint firstItem="ZHv-Yv-lad" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.55" id="9ZZ-oG-wJC"/>
+                <constraint firstItem="ZHv-Yv-lad" firstAttribute="leading" secondItem="ZV2-RC-o2a" secondAttribute="trailing" id="BSC-dI-nMV"/>
+                <constraint firstAttribute="trailing" secondItem="ZHv-Yv-lad" secondAttribute="trailing" id="OXs-SX-ld9"/>
+                <constraint firstItem="ZV2-RC-o2a" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="TtL-8P-uPA"/>
+                <constraint firstAttribute="bottom" secondItem="ZV2-RC-o2a" secondAttribute="bottom" id="UUe-nH-bSy"/>
+                <constraint firstItem="ZV2-RC-o2a" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ivS-ke-ON2"/>
+                <constraint firstAttribute="bottom" secondItem="ZHv-Yv-lad" secondAttribute="bottom" id="prh-6w-ef3"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="leftSubtitleLabel" destination="A7G-Ty-oDl" id="Bu7-IA-8Xc"/>
+                <outlet property="leftTrailingConstraint" destination="8E8-hR-zR8" id="ayb-Uv-eDP"/>
+                <outlet property="rightSubtitleLabel" destination="FNv-1q-Jw9" id="Kjz-zw-xNZ"/>
+                <outlet property="rightTrailingConstraint" destination="Fg0-B5-5UK" id="4TN-sv-AWi"/>
+                <outlet property="textField" destination="hBk-DY-4Q2" id="QtW-ii-is9"/>
+                <outlet property="titleLabel" destination="oOg-Bb-Fmy" id="2xo-N5-IlQ"/>
+            </connections>
+            <point key="canvasLocation" x="-415" y="87"/>
+        </view>
+    </objects>
+</document>

@@ -8,11 +8,25 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CurrencyExchangePageViewCell : UIView
+@protocol CurrencyExchangePageViewCellDelegate;
 
-@property (weak, nonatomic) UILabel *titleLabel;
-@property (weak, nonatomic) UILabel *leftSubtitleLabel;
-@property (weak, nonatomic) UILabel *rightSubtitleLabel;
-@property (weak, nonatomic) UITextField *inputTextField;
+@interface CurrencyExchangePageViewCell : UIView <UITextFieldDelegate>
+
+-(void)setTitle:(NSString *)title;
+-(void)setLeftSubtitle:(NSString *)subtitle;
+-(void)setRightSubtitle:(NSString *)subtitle;
+-(void)setLeftSubtitleColor:(UIColor *)color;
+-(void)setTextFieldText:(NSString *)text;
+
+@property (weak, nonatomic) id <CurrencyExchangePageViewCellDelegate> delegate;
+
+
+@end
+
+@protocol CurrencyExchangePageViewCellDelegate <NSObject>
+
+-(BOOL)shouldBeginEditingCellTextField:(CurrencyExchangePageViewCell *)cell;
+-(void)cellTextFieldChanged:(CurrencyExchangePageViewCell *)cell value: (NSString *)value;
+
 
 @end

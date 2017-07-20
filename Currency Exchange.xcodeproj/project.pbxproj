@@ -25,6 +25,7 @@
 		D3EF4F1B1F2132C100D812AF /* CurrencyExchangeViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D3EF4F1A1F2132C100D812AF /* CurrencyExchangeViewModel.m */; };
 		D3EF4F211F214CD600D812AF /* CurrencyExchangePageView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3EF4F201F214CD600D812AF /* CurrencyExchangePageView.m */; };
 		D3EF4F241F214F2A00D812AF /* CurrencyExchangePageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3EF4F231F214F2A00D812AF /* CurrencyExchangePageViewCell.m */; };
+		D3EF4F261F21643F00D812AF /* CurrencyExchangePageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3EF4F251F21643F00D812AF /* CurrencyExchangePageViewCell.xib */; };
 		E4995D73E4A38D8272F88A40 /* libPods-Currency Exchange.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E98D7A10E1E8D7ED0021CD3 /* libPods-Currency Exchange.a */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +79,7 @@
 		D3EF4F201F214CD600D812AF /* CurrencyExchangePageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrencyExchangePageView.m; sourceTree = "<group>"; };
 		D3EF4F221F214F2A00D812AF /* CurrencyExchangePageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrencyExchangePageViewCell.h; sourceTree = "<group>"; };
 		D3EF4F231F214F2A00D812AF /* CurrencyExchangePageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrencyExchangePageViewCell.m; sourceTree = "<group>"; };
+		D3EF4F251F21643F00D812AF /* CurrencyExchangePageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CurrencyExchangePageViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +144,7 @@
 				D3EF4F201F214CD600D812AF /* CurrencyExchangePageView.m */,
 				D3EF4F221F214F2A00D812AF /* CurrencyExchangePageViewCell.h */,
 				D3EF4F231F214F2A00D812AF /* CurrencyExchangePageViewCell.m */,
+				D3EF4F251F21643F00D812AF /* CurrencyExchangePageViewCell.xib */,
 				D3B32CA91F20C5260037B97E /* Main.storyboard */,
 				D3EF4F0C1F20FBF600D812AF /* Logic */,
 				D3B32CAC1F20C5260037B97E /* Assets.xcassets */,
@@ -299,6 +302,7 @@
 			files = (
 				D3B32CB01F20C5260037B97E /* LaunchScreen.storyboard in Resources */,
 				D3B32CAD1F20C5260037B97E /* Assets.xcassets in Resources */,
+				D3EF4F261F21643F00D812AF /* CurrencyExchangePageViewCell.xib in Resources */,
 				D3B32CAB1F20C5260037B97E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

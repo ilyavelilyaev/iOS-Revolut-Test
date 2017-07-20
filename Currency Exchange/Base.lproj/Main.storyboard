@@ -172,12 +172,12 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2u6-cT-ETL">
                                 <rect key="frame" x="0.0" y="129" width="375" height="169"/>
                                 <subviews>
-                                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="zeV-d3-bgu">
+                                    <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="zeV-d3-bgu">
                                         <rect key="frame" x="168" y="124" width="39" height="37"/>
                                     </pageControl>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gat-ud-zwO" customClass="CurrencyExchangePageView">
                                         <rect key="frame" x="0.0" y="8" width="375" height="116"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -197,30 +197,26 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ExchangeBottomCurrencyBack" translatesAutoresizingMaskIntoConstraints="NO" id="8q5-P9-sBf">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="169"/>
                                     </imageView>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="p1C-Ta-amA">
-                                        <rect key="frame" x="137.5" y="56.5" width="100" height="55"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="100" id="YgC-Ux-brE"/>
-                                        </constraints>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="46"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
-                                    </textField>
-                                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="fzN-BC-Vve">
+                                    <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="fzN-BC-Vve">
                                         <rect key="frame" x="168" y="124" width="39" height="37"/>
                                     </pageControl>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QaE-Y9-zQ3" customClass="CurrencyExchangePageView">
+                                        <rect key="frame" x="0.0" y="8" width="375" height="116"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="QaE-Y9-zQ3" firstAttribute="top" secondItem="YCf-qK-aFd" secondAttribute="top" constant="8" id="3Fz-AQ-09n"/>
+                                    <constraint firstItem="QaE-Y9-zQ3" firstAttribute="leading" secondItem="YCf-qK-aFd" secondAttribute="leading" id="4jw-3T-k0I"/>
                                     <constraint firstAttribute="bottom" secondItem="8q5-P9-sBf" secondAttribute="bottom" id="5Pw-Mm-ORd"/>
+                                    <constraint firstAttribute="trailing" secondItem="QaE-Y9-zQ3" secondAttribute="trailing" id="E38-Qb-iUm"/>
                                     <constraint firstItem="fzN-BC-Vve" firstAttribute="centerX" secondItem="YCf-qK-aFd" secondAttribute="centerX" id="HVW-SW-OHx"/>
                                     <constraint firstItem="8q5-P9-sBf" firstAttribute="top" secondItem="YCf-qK-aFd" secondAttribute="top" id="IG6-XZ-qfj"/>
                                     <constraint firstAttribute="bottom" secondItem="fzN-BC-Vve" secondAttribute="bottom" constant="8" id="JWV-UA-n6t"/>
+                                    <constraint firstItem="fzN-BC-Vve" firstAttribute="top" secondItem="QaE-Y9-zQ3" secondAttribute="bottom" id="Neq-lz-ypf"/>
                                     <constraint firstAttribute="trailing" secondItem="8q5-P9-sBf" secondAttribute="trailing" id="YRW-tw-9pz"/>
                                     <constraint firstItem="8q5-P9-sBf" firstAttribute="leading" secondItem="YCf-qK-aFd" secondAttribute="leading" id="dz0-53-mMk"/>
-                                    <constraint firstItem="p1C-Ta-amA" firstAttribute="centerY" secondItem="YCf-qK-aFd" secondAttribute="centerY" id="nJr-ZW-8es"/>
-                                    <constraint firstItem="p1C-Ta-amA" firstAttribute="centerX" secondItem="YCf-qK-aFd" secondAttribute="centerX" id="xVb-yI-AQQ"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -245,12 +241,13 @@
                     </view>
                     <connections>
                         <outlet property="bottomBoxBottomConstraint" destination="wrs-PA-S8s" id="6bS-y6-wI5"/>
+                        <outlet property="bottomExchangePageView" destination="QaE-Y9-zQ3" id="icp-DV-mWx"/>
                         <outlet property="bottomPageControl" destination="fzN-BC-Vve" id="cZi-08-Gej"/>
                         <outlet property="exchangeBoxHeightConstraint" destination="yxC-gt-NDZ" id="Z2Y-Zs-PeQ"/>
                         <outlet property="exchangeButton" destination="2IL-pD-zoZ" id="ULs-is-J6D"/>
-                        <outlet property="temp" destination="p1C-Ta-amA" id="gKI-kf-5mD"/>
                         <outlet property="topCurrencyBoxExchangeRateLabel" destination="mJJ-a8-8MB" id="nSE-Kh-Eky"/>
                         <outlet property="topCurrencyBoxView" destination="96H-0A-gh5" id="Itn-ZC-izC"/>
+                        <outlet property="topExchangePageView" destination="gat-ud-zwO" id="SVR-nF-Q1G"/>
                         <outlet property="topPageControl" destination="zeV-d3-bgu" id="gcS-J4-wdo"/>
                     </connections>
                 </viewController>
