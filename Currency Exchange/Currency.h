@@ -8,14 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Currency : NSObject
+@interface Currency : NSObject <NSCopying>
 
 @property (nonatomic, copy, readonly) NSString *_Nonnull code;
-@property (nonatomic, assign) double rate;
 
-- (NSString *_Nullable)symbol;
-- (double)value:(double)value convertedTo:(Currency *_Nonnull)currency;
+- (NSString *_Nonnull)symbol;
 
 - (instancetype _Nullable)initWithCode:(NSString *_Nonnull)code;
+
++ (instancetype _Nullable)eurCurrency;
++ (instancetype _Nullable)usdCurrency;
++ (instancetype _Nullable)gbpCurrency;
+
+
 
 @end

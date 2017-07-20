@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3793E9597D4DB00CD9D4CC14 /* libPods-Currency ExchangeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52275E3BC835B3B596FCD6D8 /* libPods-Currency ExchangeTests.a */; };
 		D346CC3F1F20D16200238A40 /* CurrencyFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D346CC3E1F20D16200238A40 /* CurrencyFetcher.m */; };
+		D35F666C1F20EBFA0006CD06 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = D35F666B1F20EBFA0006CD06 /* User.m */; };
+		D35F666F1F20ED040006CD06 /* CurrencyConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = D35F666E1F20ED040006CD06 /* CurrencyConverter.m */; };
 		D3B32CA21F20C5260037B97E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B32CA11F20C5260037B97E /* main.m */; };
 		D3B32CA51F20C5260037B97E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B32CA41F20C5260037B97E /* AppDelegate.m */; };
 		D3B32CAB1F20C5260037B97E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3B32CA91F20C5260037B97E /* Main.storyboard */; };
@@ -17,6 +19,8 @@
 		D3B32CBB1F20C5260037B97E /* Currency_ExchangeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B32CBA1F20C5260037B97E /* Currency_ExchangeTests.m */; };
 		D3B32CC71F20C5BE0037B97E /* CurrencyExchangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B32CC61F20C5BE0037B97E /* CurrencyExchangeViewController.m */; };
 		D3B32CCA1F20C7110037B97E /* Currency.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B32CC91F20C7110037B97E /* Currency.m */; };
+		D3EF4F0A1F20F59100D812AF /* CurrencyRateProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D3EF4F091F20F59100D812AF /* CurrencyRateProvider.m */; };
+		D3EF4F0E1F20FC7000D812AF /* CurrencyRateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3EF4F0D1F20FC7000D812AF /* CurrencyRateTests.m */; };
 		E4995D73E4A38D8272F88A40 /* libPods-Currency Exchange.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E98D7A10E1E8D7ED0021CD3 /* libPods-Currency Exchange.a */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +43,10 @@
 		7E98D7A10E1E8D7ED0021CD3 /* libPods-Currency Exchange.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Currency Exchange.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D346CC3D1F20D16200238A40 /* CurrencyFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrencyFetcher.h; sourceTree = "<group>"; };
 		D346CC3E1F20D16200238A40 /* CurrencyFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrencyFetcher.m; sourceTree = "<group>"; };
+		D35F666A1F20EBFA0006CD06 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		D35F666B1F20EBFA0006CD06 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		D35F666D1F20ED040006CD06 /* CurrencyConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrencyConverter.h; sourceTree = "<group>"; };
+		D35F666E1F20ED040006CD06 /* CurrencyConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrencyConverter.m; sourceTree = "<group>"; };
 		D3B32C9D1F20C5260037B97E /* Currency Exchange.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Currency Exchange.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3B32CA11F20C5260037B97E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D3B32CA31F20C5260037B97E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -54,6 +62,9 @@
 		D3B32CC61F20C5BE0037B97E /* CurrencyExchangeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrencyExchangeViewController.m; sourceTree = "<group>"; };
 		D3B32CC81F20C7110037B97E /* Currency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Currency.h; sourceTree = "<group>"; };
 		D3B32CC91F20C7110037B97E /* Currency.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Currency.m; sourceTree = "<group>"; };
+		D3EF4F081F20F59100D812AF /* CurrencyRateProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrencyRateProvider.h; sourceTree = "<group>"; };
+		D3EF4F091F20F59100D812AF /* CurrencyRateProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrencyRateProvider.m; sourceTree = "<group>"; };
+		D3EF4F0D1F20FC7000D812AF /* CurrencyRateTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrencyRateTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,10 +124,7 @@
 				D3B32CC51F20C5BE0037B97E /* CurrencyExchangeViewController.h */,
 				D3B32CC61F20C5BE0037B97E /* CurrencyExchangeViewController.m */,
 				D3B32CA91F20C5260037B97E /* Main.storyboard */,
-				D3B32CC81F20C7110037B97E /* Currency.h */,
-				D3B32CC91F20C7110037B97E /* Currency.m */,
-				D346CC3D1F20D16200238A40 /* CurrencyFetcher.h */,
-				D346CC3E1F20D16200238A40 /* CurrencyFetcher.m */,
+				D3EF4F0C1F20FBF600D812AF /* Logic */,
 				D3B32CAC1F20C5260037B97E /* Assets.xcassets */,
 				D3B32CAE1F20C5260037B97E /* LaunchScreen.storyboard */,
 				D3B32CB11F20C5260037B97E /* Info.plist */,
@@ -137,9 +145,27 @@
 			isa = PBXGroup;
 			children = (
 				D3B32CBA1F20C5260037B97E /* Currency_ExchangeTests.m */,
+				D3EF4F0D1F20FC7000D812AF /* CurrencyRateTests.m */,
 				D3B32CBC1F20C5260037B97E /* Info.plist */,
 			);
 			path = "Currency ExchangeTests";
+			sourceTree = "<group>";
+		};
+		D3EF4F0C1F20FBF600D812AF /* Logic */ = {
+			isa = PBXGroup;
+			children = (
+				D3B32CC81F20C7110037B97E /* Currency.h */,
+				D3B32CC91F20C7110037B97E /* Currency.m */,
+				D35F666D1F20ED040006CD06 /* CurrencyConverter.h */,
+				D35F666E1F20ED040006CD06 /* CurrencyConverter.m */,
+				D35F666A1F20EBFA0006CD06 /* User.h */,
+				D35F666B1F20EBFA0006CD06 /* User.m */,
+				D346CC3D1F20D16200238A40 /* CurrencyFetcher.h */,
+				D346CC3E1F20D16200238A40 /* CurrencyFetcher.m */,
+				D3EF4F081F20F59100D812AF /* CurrencyRateProvider.h */,
+				D3EF4F091F20F59100D812AF /* CurrencyRateProvider.m */,
+			);
+			name = Logic;
 			sourceTree = "<group>";
 		};
 		F9683A208E7F080766AFC93E /* Pods */ = {
@@ -355,7 +381,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3B32CCA1F20C7110037B97E /* Currency.m in Sources */,
+				D35F666F1F20ED040006CD06 /* CurrencyConverter.m in Sources */,
 				D3B32CC71F20C5BE0037B97E /* CurrencyExchangeViewController.m in Sources */,
+				D3EF4F0A1F20F59100D812AF /* CurrencyRateProvider.m in Sources */,
+				D35F666C1F20EBFA0006CD06 /* User.m in Sources */,
 				D3B32CA51F20C5260037B97E /* AppDelegate.m in Sources */,
 				D346CC3F1F20D16200238A40 /* CurrencyFetcher.m in Sources */,
 				D3B32CA21F20C5260037B97E /* main.m in Sources */,
@@ -367,6 +396,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3B32CBB1F20C5260037B97E /* Currency_ExchangeTests.m in Sources */,
+				D3EF4F0E1F20FC7000D812AF /* CurrencyRateTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

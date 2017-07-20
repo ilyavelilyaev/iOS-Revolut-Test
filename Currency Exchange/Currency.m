@@ -9,7 +9,6 @@
 #import "Currency.h"
 @implementation Currency
 
-
 - (instancetype _Nullable)initWithCode:(NSString *_Nonnull)code {
     self = [super init];
     if (self) {
@@ -18,14 +17,33 @@
     return self;
 }
 
-- (NSString * _Nullable)symbol {
+- (NSString * _Nonnull)symbol {
     NSLocale *locale = [NSLocale currentLocale];
     return [locale displayNameForKey:NSLocaleCurrencySymbol value:self.code];
 }
 
-- (double)value:(double)value convertedTo:(Currency *_Nonnull)currency {
-    double valueInEuro = value * self.rate;
-    return valueInEuro / currency.rate;
++ (instancetype _Nullable)eurCurrency {
+    return [[self alloc] initWithCode: @"EUR"];
+}
+
++ (instancetype _Nullable)usdCurrency {
+    return [[Currency alloc] initWithCode: @"USD"];
+}
+
++ (instancetype _Nullable)gbpCurrency {
+    return [[Currency alloc] initWithCode: @"GBP"];
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    Currency *newCurrency = [[[self class] allocWithZone:zone] init];
+    newCurrency->_code = [_code copyWithZone:zone];
+    return newCurrency;
+}
+
+- (BOOL)isEqual:(id)object {
+    Currency *other = (Currency *)object;
+    if (!other) { return NO; }
+    return [other.code isEqual:self.code];
 }
 
 

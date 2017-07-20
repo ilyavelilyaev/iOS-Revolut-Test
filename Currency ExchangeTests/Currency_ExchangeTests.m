@@ -9,6 +9,9 @@
 #import <XCTest/XCTest.h>
 #import "Currency.h"
 #import "CurrencyFetcher.h"
+#import "User.h"
+#import "CurrencyRateProvider.h"
+
 
 #import <XMLDictionary/XMLDictionary.h>
 
@@ -33,25 +36,19 @@
 }
 
 - (void)testCurrencySymbol {
-    Currency *currency = [[Currency alloc] initWithCode: @"USD"];
+    Currency *currency = [Currency usdCurrency];
     NSString *symbol = [currency symbol];
     NSString *expectedSymbol = @"$";
     NSLog(@"%@", symbol);
     XCTAssert([symbol isEqualToString:expectedSymbol]);
 }
 
-- (void)testCurrencyConversion {
-    Currency *usd = [[Currency alloc] initWithCode: @"USD"];
-    usd.rate = 1.1533;
-
-    Currency *rub = [[Currency alloc] initWithCode: @"RUB"];
-    rub.rate = 68.0915;
-
-    double expected = 59.0406;
-    double usdRubRate = [usd value:1 convertedTo:rub];
-
-    XCTAssert((usdRubRate - expected) < 0.0001);
+- (void)testUser {
+    User *user = [[User alloc] init];
+    Currency *usd = [Currency usdCurrency];
+    XCTAssert([user.balance[usd] isEqual:@100]);
 }
+
 
 - (void)testCurrenciesFetcher {
     CurrencyFetcher *fetcher = [[CurrencyFetcher alloc] init];
@@ -66,11 +63,5 @@
 }
 
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
-}
 
 @end
