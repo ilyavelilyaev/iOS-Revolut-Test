@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "Currency.h"
 
 @interface Currency_ExchangeTests : XCTestCase
 
@@ -24,9 +25,25 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+- (void)testCurrencySymbol {
+    Currency *currency = [[Currency alloc] initWithCode: @"USD"];
+    NSString *symbol = [currency symbol];
+    NSString *expectedSymbol = @"$";
+    NSLog(@"%@", symbol);
+    XCTAssert([symbol isEqualToString:expectedSymbol]);
+}
+
+- (void)testCurrencyConversion {
+    Currency *usd = [[Currency alloc] initWithCode: @"USD"];
+    usd.rate = 1.1533;
+
+    Currency *rub = [[Currency alloc] initWithCode: @"RUB"];
+    rub.rate = 68.0915;
+
+    double expected = 59.0406;
+    double usdRubRate = [usd value:1 convertedTo:rub];
+
+    XCTAssert((usdRubRate - expected) < 0.0001);
 }
 
 - (void)testPerformanceExample {

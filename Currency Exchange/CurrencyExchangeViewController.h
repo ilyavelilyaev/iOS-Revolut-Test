@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  CurrencyExchangeViewController.h
 //  Currency Exchange
 //
 //  Created by Ilya Velilyaev on 20.07.17.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface CurrencyExchangeViewController : UIViewController
 
 @end
-
