@@ -8,6 +8,7 @@
 
 #import "CurrencyRateProvider.h"
 #import "CurrencyFetcher.h"
+#import "EXTScope.h"
 
 
 @interface CurrencyRateProvider ()
@@ -52,7 +53,9 @@
 }
 
 - (void)timerFired:(NSTimer *)timer {
+    @weakify(self)
     [self.fetcher loadCurrenciesWithCompletion:^(NSDictionary * _Nullable currencyRateDictionary) {
+        @strongify(self)
         self.cache = currencyRateDictionary;
         [self.delegate rateProviderUpdatedCurrencyRates:self];
     }];

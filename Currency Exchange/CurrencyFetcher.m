@@ -8,6 +8,7 @@
 
 #import "CurrencyFetcher.h"
 #import <XMLDictionary/XMLDictionary.h>
+#import "EXTScope.h"
 
 NSString *const ratesURL = @"http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
 
@@ -19,7 +20,9 @@ NSString *const ratesURL = @"http://www.ecb.europa.eu/stats/eurofxref/eurofxref-
 
 - (void)loadCurrenciesWithCompletion:(CurrencyFetcherCompletion)completion {
     NSURL *url = [NSURL URLWithString:ratesURL];
+    @weakify(self);
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
+        @strongify(self);
         NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:url];
         XMLDictionaryParser *parser = [XMLDictionaryParser sharedInstance];
         NSDictionary *dict = [parser dictionaryWithParser:xmlParser];
