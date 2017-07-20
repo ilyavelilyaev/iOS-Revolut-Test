@@ -8,12 +8,19 @@
 
 #import <XCTest/XCTest.h>
 #import "Currency.h"
+#import "CurrencyFetcher.h"
+
+#import <XMLDictionary/XMLDictionary.h>
 
 @interface Currency_ExchangeTests : XCTestCase
 
+@property XCTestExpectation* expectation;
+
+
+
 @end
 
-@implementation Currency_ExchangeTests
+@implementation Currency_ExchangeTests 
 
 - (void)setUp {
     [super setUp];
@@ -45,6 +52,19 @@
 
     XCTAssert((usdRubRate - expected) < 0.0001);
 }
+
+- (void)testCurrenciesFetcher {
+    CurrencyFetcher *fetcher = [[CurrencyFetcher alloc] init];
+    [fetcher loadCurrenciesWithCompletion:^(NSDictionary * _Nullable currencyRateDictionary) {
+        XCTAssert(currencyRateDictionary[@"USD"]);
+        XCTAssert(currencyRateDictionary[@"JPY"]);
+        XCTAssert(currencyRateDictionary[@"RUB"]);
+        [_expectation fulfill];
+    }];
+    _expectation = [self expectationWithDescription:@"aaa"];
+    [self waitForExpectations:@[_expectation] timeout:10];
+}
+
 
 - (void)testPerformanceExample {
     // This is an example of a performance test case.
