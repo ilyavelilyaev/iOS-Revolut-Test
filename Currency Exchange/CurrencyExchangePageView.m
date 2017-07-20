@@ -66,7 +66,6 @@
 }
 
 -(void)configureCellsFrames {
-    NSLog(@"Configuring frame");
     CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     for (int i = 0; i < 3; i++) {
@@ -98,7 +97,6 @@
 
     int idx = round(currentOffsetX / width);
     int currentIdx = [self.cellPositionArray[idx] intValue];
-    NSLog(@"%d %d",idx,  currentIdx);
 
     if (idx == 2) {
         self.cellPositionArray[0] = [NSNumber numberWithInt:(currentIdx) % 3];
