@@ -69,6 +69,35 @@
     return [self.delegate shouldBeginEditingCellTextField:self];
 }
 
+-(BOOL)textField:(UITextField *)textField
+shouldChangeCharactersInRange:(NSRange)range
+replacementString:(NSString *)string {
+
+    if (!string.length)
+        return YES;
+
+    NSError *error = nil;
+
+        //Allow only two digits after decimal point
+    NSString *expression = @"^[-+]?\\d+([.,]\\d{0,2}){0,1}$";
+    NSRegularExpression *regex =
+    [NSRegularExpression regularExpressionWithPattern:expression
+                                              options:0
+                                                error:&error];
+
+    NSString *result = [textField.text stringByReplacingCharactersInRange:range withString:string];
+
+    NSUInteger numberOfMatches = [regex numberOfMatchesInString:result
+                                                        options:0
+                                                          range:NSMakeRange(0, [result length])];
+    
+    if (numberOfMatches == 0)
+        return NO;
+
+    return result.length < 10;
+
+}
+
 -(void)setTitle:(NSString *)title {
     [self.titleLabel setText:title];
 }

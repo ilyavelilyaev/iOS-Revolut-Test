@@ -7,7 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CurrencyExchangePageView.h"
+#import "CurrencyExchangeViewModel.h"
 
-@interface CurrencyExchangeViewController : UIViewController 
+@class CurrencyExchangeViewModel;
+
+@interface CurrencyExchangeViewController : UIViewController
+<CurrencyExchangePageViewDataSource, CurrencyExchangePageViewDelegate>
+
+@property (nonatomic) CurrencyExchangeViewModel *viewModel;
+
+
+-(void)reloadTopCurrencyView;
+-(void)reloadPageControl;
+-(void)reloadPageViews;
+
 
 @end

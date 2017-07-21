@@ -8,11 +8,34 @@
 
 #import <Foundation/Foundation.h>
 #import "CurrencyExchangePageView.h"
+#import "CurrencyExchangeViewController.h"
+#import "CurrencyRateProvider.h"
+
+@class CurrencyExchangeViewController;
 
 @interface CurrencyExchangeViewModel : NSObject
-<CurrencyExchangePageViewDataSource, CurrencyExchangePageViewDelegate>
+<CurrencyRateProviderDelegate>
 
+@property (weak, nonatomic) CurrencyExchangeViewController *currencyExchangeViewController;
 
+-(void)load;
+-(BOOL)exchange;
+
+-(NSUInteger)amountOfPages;
+-(NSString *)titleForPageAtIdx:(NSUInteger)idx;
+-(NSString *)leftSubtitleForPageAtIdx:(NSUInteger)idx;
+-(NSString *)rightSubtitleForBottomPageAtIdx:(NSUInteger)idx;
+-(UIColor *)leftSubtitleColorForTopPageAtIdx:(NSUInteger)idx;
+-(NSString *)textFieldTextForTopPageAtIdx:(NSUInteger)idx;
+-(NSString *)textFieldTextForBottomPageAtIdx:(NSUInteger)idx;
+-(BOOL)editingActiveForTopPage;
+-(BOOL)editingActiveForBottomPage;
+
+-(void)updatedCurrentTopPage:(NSUInteger)idx;
+-(void)updatedCurrentBottomPage:(NSUInteger)idx;
+
+-(void)updatedTopTextAt:(NSUInteger)idx text:(NSString *)text;
+-(void)updatedBottomTextAt:(NSUInteger)idx text:(NSString *)text;
 
 
 @end

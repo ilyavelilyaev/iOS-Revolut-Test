@@ -29,6 +29,7 @@
                                     <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                     <connections>
                                         <action selector="textFieldChangedEditing:" destination="iN0-l3-epB" eventType="editingChanged" id="erV-8A-RJL"/>
+                                        <outlet property="delegate" destination="iN0-l3-epB" id="BLp-7I-ACb"/>
                                     </connections>
                                 </textField>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have $100.23" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A7G-Ty-oDl">
@@ -87,7 +88,9 @@
                 <constraint firstItem="ZHv-Yv-lad" firstAttribute="leading" secondItem="ZV2-RC-o2a" secondAttribute="trailing" id="BSC-dI-nMV"/>
                 <constraint firstAttribute="trailing" secondItem="ZHv-Yv-lad" secondAttribute="trailing" id="OXs-SX-ld9"/>
                 <constraint firstItem="ZV2-RC-o2a" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="TtL-8P-uPA"/>
+                <constraint firstItem="hBk-DY-4Q2" firstAttribute="top" secondItem="oOg-Bb-Fmy" secondAttribute="top" id="U60-BA-WRh"/>
                 <constraint firstAttribute="bottom" secondItem="ZV2-RC-o2a" secondAttribute="bottom" id="UUe-nH-bSy"/>
+                <constraint firstItem="hBk-DY-4Q2" firstAttribute="height" secondItem="oOg-Bb-Fmy" secondAttribute="height" id="iDE-bH-ub7"/>
                 <constraint firstItem="ZV2-RC-o2a" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ivS-ke-ON2"/>
                 <constraint firstAttribute="bottom" secondItem="ZHv-Yv-lad" secondAttribute="bottom" id="prh-6w-ef3"/>
             </constraints>
@@ -96,9 +99,9 @@
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="leftSubtitleLabel" destination="A7G-Ty-oDl" id="Bu7-IA-8Xc"/>
+                <outlet property="leftSubtitleLabel" destination="FNv-1q-Jw9" id="9Tm-g6-1Xm"/>
                 <outlet property="leftTrailingConstraint" destination="8E8-hR-zR8" id="ayb-Uv-eDP"/>
-                <outlet property="rightSubtitleLabel" destination="FNv-1q-Jw9" id="Kjz-zw-xNZ"/>
+                <outlet property="rightSubtitleLabel" destination="A7G-Ty-oDl" id="LBh-ke-1IN"/>
                 <outlet property="rightTrailingConstraint" destination="Fg0-B5-5UK" id="4TN-sv-AWi"/>
                 <outlet property="textField" destination="hBk-DY-4Q2" id="QtW-ii-is9"/>
                 <outlet property="titleLabel" destination="oOg-Bb-Fmy" id="2xo-N5-IlQ"/>

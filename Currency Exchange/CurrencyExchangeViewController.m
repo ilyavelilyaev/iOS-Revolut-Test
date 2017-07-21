@@ -7,8 +7,6 @@
 //
 
 #import "CurrencyExchangeViewController.h"
-#import "CurrencyExchangePageView.h"
-#import "CurrencyExchangeViewModel.h"
 
 @interface CurrencyExchangeViewController ()
 
@@ -26,13 +24,11 @@
 @property (weak, nonatomic) IBOutlet CurrencyExchangePageView *topExchangePageView;
 @property (weak, nonatomic) IBOutlet CurrencyExchangePageView *bottomExchangePageView;
 
-@property (nonatomic) CurrencyExchangeViewModel *viewModel;
-
 @end
 
 @implementation CurrencyExchangeViewController
 
-- (void)viewDidLoad {
+-(void)viewDidLoad {
     [super viewDidLoad];
     self.topCurrencyBoxView.layer.borderWidth = 1.0;
     self.topCurrencyBoxView.layer.cornerRadius = 8.0;
@@ -43,9 +39,16 @@
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
 
+
     self.viewModel = [[CurrencyExchangeViewModel alloc] init];
-    self.topExchangePageView.dataSource = self.viewModel;
-    [self.topExchangePageView reloadData];
+    self.viewModel.currencyExchangeViewController = self;
+
+    self.topExchangePageView.dataSource = self;
+    self.topExchangePageView.delegate = self;
+    self.bottomExchangePageView.dataSource = self;
+    self.bottomExchangePageView.delegate = self;
+
+    [self.viewModel load];
 }
 
 -(void)viewDidLayoutSubviews {
@@ -53,22 +56,23 @@
     [self adjustTitlesFontSize];
 }
 
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
+-(UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
 
-- (IBAction)topCurrencyBoxPressed:(UITapGestureRecognizer *)sender {
+-(IBAction)topCurrencyBoxPressed:(UITapGestureRecognizer *)sender {
     NSLog(@"%s", __FUNCTION__);
 }
 
-- (void)keyboardWillAppear:(NSNotification *)notification {
+#pragma mark UI Adjustment Methods
+
+-(void)keyboardWillAppear:(NSNotification *)notification {
     NSValue *keyboardFrameValue = [notification userInfo][UIKeyboardFrameEndUserInfoKey];
     CGRect keyboardFrame = [keyboardFrameValue CGRectValue];
     [self setupBoxHeightsKeyboardFrame:keyboardFrame];
 }
 
-- (void)setupBoxHeightsKeyboardFrame:(CGRect)keyboardFrame {
+-(void)setupBoxHeightsKeyboardFrame:(CGRect)keyboardFrame {
     CGFloat keyboardHeight = keyboardFrame.size.height;
 
     [self.bottomBoxBottomConstraint setConstant:keyboardHeight];
@@ -80,7 +84,7 @@
     [self.exchangeBoxHeightConstraint setConstant:availableHeight / 2];
 }
 
-- (void)adjustTitlesFontSize {
+-(void)adjustTitlesFontSize {
 
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     UIFont *exchangeButtonFont = self.exchangeButton.titleLabel.font;
@@ -91,5 +95,94 @@
 
 }
 
+#pragma mark Reload UI methods
+
+-(void)reloadTopCurrencyView {
+    
+}
+
+-(void)reloadPageControl {
+    NSUInteger amountOfPages = [self.viewModel amountOfPages];
+    [self.topPageControl setNumberOfPages:amountOfPages];
+    [self.bottomPageControl setNumberOfPages:amountOfPages];
+}
+
+-(void)reloadPageViews {
+    [self.topExchangePageView reloadData];
+    [self.bottomExchangePageView reloadData];
+}
+
+#pragma mark Page View DataSource
+
+-(NSUInteger)amountOfPages:(CurrencyExchangePageView *)pageView {
+    return [self.viewModel amountOfPages];
+}
+
+-(NSString *)titleForPage:(CurrencyExchangePageView *)pageView at:(NSUInteger)idx {
+    return [self.viewModel titleForPageAtIdx:idx];
+}
+
+-(NSString *)leftSubtitleForPage:(CurrencyExchangePageView *)pageView at:(NSUInteger)idx {
+    return [self.viewModel leftSubtitleForPageAtIdx:idx];
+}
+
+-(NSString *)rightSubtitleForPage:(CurrencyExchangePageView *)pageView at:(NSUInteger)idx {
+    if (pageView == self.bottomExchangePageView)
+        return [self.viewModel rightSubtitleForBottomPageAtIdx:idx];
+
+    return nil;
+}
+
+-(UIColor *)leftSubtitleColorForPage:(CurrencyExchangePageView *)pageView at:(NSUInteger)idx {
+    if (pageView == self.topExchangePageView)
+        return [self.viewModel leftSubtitleColorForTopPageAtIdx:idx];
+
+    return [UIColor whiteColor];
+}
+
+-(NSString *)textFieldTextForPage:(CurrencyExchangePageView *)pageView at:(NSUInteger)idx {
+    if (pageView == self.topExchangePageView)
+        return [self.viewModel textFieldTextForTopPageAtIdx:idx];
+
+    if (pageView == self.bottomExchangePageView)
+        return [self.viewModel textFieldTextForBottomPageAtIdx:idx];
+
+    return nil;
+}
+
+-(BOOL)isEditingActive:(CurrencyExchangePageView *)pageView {
+    if (pageView == self.topExchangePageView)
+        return [self.viewModel editingActiveForTopPage];
+
+    if (pageView == self.bottomExchangePageView)
+        return [self.viewModel editingActiveForBottomPage];
+
+    return NO;
+}
+
+
+#pragma mark Page View Delegate
+
+-(void)pageView:(CurrencyExchangePageView *)pageView didScrollToPageAt:(NSUInteger)idx {
+    if (pageView == self.topExchangePageView) {
+        [self.viewModel updatedCurrentTopPage:idx];
+        [self.topPageControl setCurrentPage:idx];
+    }
+
+    if (pageView == self.bottomExchangePageView) {
+        [self.viewModel updatedCurrentBottomPage:idx];
+        [self.bottomPageControl setCurrentPage:idx];
+    }
+}
+
+-(void)pageView:(CurrencyExchangePageView *)pageView
+didChangeTextFieldTextAt:(NSUInteger)idx
+           text:(NSString *)text {
+    if (pageView == self.topExchangePageView)
+        [self.viewModel updatedTopTextAt:idx text:text];
+
+    if (pageView == self.bottomExchangePageView)
+        [self.viewModel updatedBottomTextAt:idx text:text];
+}
 
 @end
