@@ -141,6 +141,7 @@
     if (balance < 0.01 && balance > 0)
         return [NSString stringWithFormat:@"You have <%@0.01", symbol];
 
+    balance = 0.01 * (floor(balance * 100));
     return [NSString stringWithFormat:@"You have %@%.2lf", symbol, balance];
 }
 
