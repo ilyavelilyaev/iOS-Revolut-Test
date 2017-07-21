@@ -162,9 +162,21 @@
     unichar lastChar = [text characterAtIndex:([text length] - 1)];
     unichar fullStop = 46;
     unichar comma = 44;
+    unichar zero = 48;
 
+        // So the user can enter characters after decimal point;
     if (lastChar == fullStop || lastChar == comma) {
         [stringToReturn appendString:[NSString stringWithCharacters:&lastChar length:1]];
+    }
+
+    unichar lastButOneChar = [text characterAtIndex:([text length] - 2)];
+    unichar *characters = (unichar *)malloc(sizeof(unichar) * 2);
+    characters[0] = lastButOneChar;
+    characters[1] = lastChar;
+
+        // So the user can enter characters after decimal point and 0 e.g. 0.03
+    if ((lastButOneChar == fullStop || lastButOneChar == comma) && lastChar == zero) {
+        [stringToReturn appendString:[NSString stringWithCharacters:characters length:2]];
     }
 
     return stringToReturn;
@@ -178,8 +190,10 @@
                                        inCurrency:currencies[currentTopIdx]
                                       convertedTo:currencies[idx]
                                      rateProvider:rateProvider];
+    if (isfinite(bottomValue))
+        return [self processTextForInputField:nil value:bottomValue];
 
-    return [self processTextForInputField:nil value:bottomValue];
+    return nil;
 }
 
 -(BOOL)editingActiveForTopPage {

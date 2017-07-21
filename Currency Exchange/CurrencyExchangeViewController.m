@@ -69,7 +69,7 @@
     if (!success) {
         UIAlertController *alertController = [UIAlertController
                                               alertControllerWithTitle:@"Error!"
-                                              message:@"Error while exchanging funds."
+                                              message:@"You do not have enough funds for exchange."
                                               preferredStyle: UIAlertControllerStyleAlert];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
                                                            style:UIAlertActionStyleCancel
