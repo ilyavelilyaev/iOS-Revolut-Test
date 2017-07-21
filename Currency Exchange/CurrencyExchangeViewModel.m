@@ -137,6 +137,10 @@
     Currency *current = currencies[idx];
     NSString *symbol = current.symbol;
     double balance = [user.balance[current] doubleValue];
+
+    if (balance < 0.01 && balance > 0)
+        return [NSString stringWithFormat:@"You have <%@0.01", symbol];
+
     return [NSString stringWithFormat:@"You have %@%.2lf", symbol, balance];
 }
 
