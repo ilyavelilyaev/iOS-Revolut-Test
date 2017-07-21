@@ -98,7 +98,7 @@
 #pragma mark Reload UI methods
 
 -(void)reloadTopCurrencyView {
-    
+    self.topCurrencyBoxExchangeRateLabel.attributedText = [self.viewModel textForTopCurrencyView];
 }
 
 -(void)reloadPageControl {

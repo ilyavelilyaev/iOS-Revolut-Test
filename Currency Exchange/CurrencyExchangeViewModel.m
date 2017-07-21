@@ -61,6 +61,40 @@
     return YES;
 }
 
+-(NSAttributedString *)textForTopCurrencyView {
+    Currency *topCurrency = currencies[currentTopIdx];
+    Currency *bottomCurrency = currencies[currentBottomIdx];
+
+    double value = [currencyConverter value:1
+                                 inCurrency:topCurrency
+                                convertedTo:bottomCurrency
+                               rateProvider:rateProvider];
+
+    if (isfinite(value) && value != 0) {
+        NSString *stringToShow = [NSString stringWithFormat:@"%@1=%@%.4f", topCurrency.symbol,
+                                  bottomCurrency.symbol, value];
+        NSMutableAttributedString *attributedStringToShow = [[NSMutableAttributedString alloc]
+                                                             initWithString:stringToShow];
+        UIFont *largeFont = [UIFont systemFontOfSize:18.0 weight: UIFontWeightLight];
+        UIFont *smallFont = [largeFont fontWithSize:13.0];
+
+        [attributedStringToShow addAttribute:NSFontAttributeName
+                                       value:largeFont
+                                       range:NSMakeRange(0, [stringToShow length] - 2)];
+
+        [attributedStringToShow addAttribute:NSFontAttributeName
+                                       value:smallFont
+                                       range:NSMakeRange([stringToShow length] - 2, 2)];
+
+        [attributedStringToShow addAttribute:NSForegroundColorAttributeName
+                                       value:[UIColor whiteColor]
+                                       range:NSMakeRange(0, [stringToShow length])];
+
+        return attributedStringToShow;
+    }
+
+    return nil;
+}
 
 -(NSUInteger)amountOfPages {
     return user.balance.count;
@@ -148,10 +182,14 @@
 
 -(void)updatedCurrentTopPage:(NSUInteger)idx {
     currentTopIdx = idx;
+    [self.currencyExchangeViewController reloadTopCurrencyView];
+    [self.currencyExchangeViewController reloadPageViews];
 }
 
 -(void)updatedCurrentBottomPage:(NSUInteger)idx {
-
+    currentBottomIdx = idx;
+    [self.currencyExchangeViewController reloadTopCurrencyView];
+    [self.currencyExchangeViewController reloadPageViews];
 }
 
 -(void)updatedTopTextAt:(NSUInteger)idx text:(NSString *)text {
