@@ -21,6 +21,8 @@
 -(void)load;
 -(BOOL)exchange;
 
+-(BOOL)canExchange;
+
 -(NSAttributedString *)textForTopCurrencyView;
 -(NSUInteger)amountOfPages;
 -(NSString *)titleForPageAtIdx:(NSUInteger)idx;

@@ -26,6 +26,7 @@
                                     to:(Currency *)toCurrency
                   valueInFirstCurrency:(double)value
                           rateProvider:(CurrencyRateProvider *)provider {
+
     if ([fromCurrency isEqual:toCurrency]) { return YES; }
 
     double fromBalance = [self.balance[fromCurrency] doubleValue];
@@ -45,6 +46,25 @@
     mutableBalance[toCurrency] = [NSNumber numberWithDouble:toBalance];
 
     _balance = [NSDictionary dictionaryWithDictionary:mutableBalance];
+    return YES;
+}
+
+- (BOOL)canPerformTransactionFromCurrency:(Currency *)fromCurrency
+                                    to:(Currency *)toCurrency
+                  valueInFirstCurrency:(double)value
+                          rateProvider:(CurrencyRateProvider *)provider {
+
+    if ([fromCurrency isEqual:toCurrency]) { return NO; }
+
+    double fromBalance = [self.balance[fromCurrency] doubleValue];
+
+    if (fromBalance < value) { return NO; }
+
+    CurrencyConverter *converter = [[CurrencyConverter alloc] init];
+    double toCurrencyValue = [converter value:value inCurrency:fromCurrency convertedTo:toCurrency rateProvider:provider];
+
+    if (toCurrencyValue < 0.01 || value < 0.01) { return NO; }
+
     return YES;
 }
 

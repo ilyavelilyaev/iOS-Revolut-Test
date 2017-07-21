@@ -30,7 +30,10 @@
                                         <rect key="frame" x="272.5" y="12.5" width="92.5" height="35"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                         <state key="normal" title="Exchange">
-                                            <color key="titleColor" white="1" alpha="0.5" colorSpace="calibratedWhite"/>
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="disabled">
+                                            <color key="titleColor" white="1" alpha="0.4017823012232416" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="exchangeButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fVb-vT-waB"/>

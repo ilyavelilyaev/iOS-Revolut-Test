@@ -23,4 +23,9 @@
                   valueInFirstCurrency:(double)value
                           rateProvider:(CurrencyRateProvider *)provider;
 
+- (BOOL)canPerformTransactionFromCurrency:(Currency *)fromCurrency
+                                    to:(Currency *)toCurrency
+                  valueInFirstCurrency:(double)value
+                          rateProvider:(CurrencyRateProvider *)provider;
+
 @end

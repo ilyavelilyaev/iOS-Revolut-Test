@@ -79,6 +79,7 @@
         return;
     }
     [self reloadPageViews];
+    [self reloadExchangeButton];
 }
 
 #pragma mark UI Adjustment Methods
@@ -128,6 +129,12 @@
 -(void)reloadPageViews {
     [self.topExchangePageView reloadData];
     [self.bottomExchangePageView reloadData];
+}
+
+-(void)reloadExchangeButton {
+    BOOL enabled = [self.viewModel canExchange];
+    [self.exchangeButton setEnabled:enabled];
+
 }
 
 #pragma mark Page View DataSource

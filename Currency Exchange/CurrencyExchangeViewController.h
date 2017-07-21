@@ -21,6 +21,7 @@
 -(void)reloadTopCurrencyView;
 -(void)reloadPageControl;
 -(void)reloadPageViews;
+-(void)reloadExchangeButton;
 
 
 @end

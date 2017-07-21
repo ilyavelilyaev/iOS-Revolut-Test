@@ -37,7 +37,7 @@
     CGFloat width = self.bounds.size.width;
 
     if (width < 375) {
-        [self.rightTrailingConstraint setConstant:18];
+        [self.leftTrailingConstraint setConstant:18];
         [self.rightTrailingConstraint setConstant:18];
     }
     [self adjustSubtitlesFontSizes];

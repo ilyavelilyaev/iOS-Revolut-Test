@@ -26,6 +26,10 @@
 
 }
 
+@property (nonatomic, readonly, getter=topCurrency) Currency *topCurrency;
+@property (nonatomic, readonly, getter=bottomCurrency) Currency *bottomCurrency;
+
+
 @end
 
 @implementation CurrencyExchangeViewModel
@@ -49,22 +53,38 @@
     return self;
 }
 
+-(Currency *)topCurrency {
+    return currencies[currentTopIdx];
+}
+
+-(Currency *)bottomCurrency {
+    return currencies[currentBottomIdx];
+}
+
+
 -(void)load {
     [rateProvider startUpdatingCurrencyWithInterval:30.0];
 
+    [self.currencyExchangeViewController reloadExchangeButton];
     [self.currencyExchangeViewController reloadTopCurrencyView];
     [self.currencyExchangeViewController reloadPageControl];
     [self.currencyExchangeViewController reloadPageViews];
 }
 
--(BOOL)exchange {
-    Currency *topCurrency = currencies[currentTopIdx];
-    Currency *bottomCurrency = currencies[currentBottomIdx];
-
+-(BOOL)canExchange {
     double value = fabs([topText doubleValue]);
 
-    BOOL success = [user performTransactionFromCurrency:topCurrency
-                                                     to:bottomCurrency
+    return [user canPerformTransactionFromCurrency:self.topCurrency
+                                                to:self.bottomCurrency
+                              valueInFirstCurrency:value
+                                      rateProvider:rateProvider];
+}
+
+-(BOOL)exchange {
+    double value = fabs([topText doubleValue]);
+
+    BOOL success = [user performTransactionFromCurrency:self.topCurrency
+                                                     to:self.bottomCurrency
                                    valueInFirstCurrency:value
                                            rateProvider:rateProvider];
     
@@ -72,17 +92,15 @@
 }
 
 -(NSAttributedString *)textForTopCurrencyView {
-    Currency *topCurrency = currencies[currentTopIdx];
-    Currency *bottomCurrency = currencies[currentBottomIdx];
 
     double value = [currencyConverter value:1
-                                 inCurrency:topCurrency
-                                convertedTo:bottomCurrency
+                                 inCurrency:self.topCurrency
+                                convertedTo:self.bottomCurrency
                                rateProvider:rateProvider];
 
     if (isfinite(value) && value != 0) {
-        NSString *stringToShow = [NSString stringWithFormat:@"%@1=%@%.4f", topCurrency.symbol,
-                                  bottomCurrency.symbol, value];
+        NSString *stringToShow = [NSString stringWithFormat:@"%@1=%@%.4f", self.topCurrency.symbol,
+                                  self.bottomCurrency.symbol, value];
         NSMutableAttributedString *attributedStringToShow = [[NSMutableAttributedString alloc]
                                                              initWithString:stringToShow];
         UIFont *largeFont = [UIFont systemFontOfSize:18.0 weight: UIFontWeightLight];
@@ -124,15 +142,14 @@
 
 -(NSString *)rightSubtitleForBottomPageAtIdx:(NSUInteger)idx {
     Currency *bottomCurrency = currencies[idx];
-    Currency *topCurrency = currencies[currentTopIdx];
 
     double value = [currencyConverter value:1
                                  inCurrency:bottomCurrency
-                                convertedTo:topCurrency
+                                convertedTo:self.topCurrency
                                rateProvider:rateProvider];
 
     if (isfinite(value) && value != 0)
-        return [NSString stringWithFormat:@"%@1=%@%.2lf", bottomCurrency.symbol, topCurrency.symbol, value];
+        return [NSString stringWithFormat:@"%@1=%@%.2lf", bottomCurrency.symbol, self.topCurrency.symbol, value];
 
     return nil;
 }
@@ -159,7 +176,7 @@
     double topValue = fabs([topText doubleValue]);
 
     double bottomValue = [currencyConverter value:topValue
-                                       inCurrency:currencies[currentTopIdx]
+                                       inCurrency:self.topCurrency
                                       convertedTo:currencies[idx]
                                      rateProvider:rateProvider];
     if (isfinite(bottomValue))
@@ -211,12 +228,14 @@
 
 -(void)updatedCurrentTopPage:(NSUInteger)idx {
     currentTopIdx = idx;
+    [self.currencyExchangeViewController reloadExchangeButton];
     [self.currencyExchangeViewController reloadTopCurrencyView];
     [self.currencyExchangeViewController reloadPageViews];
 }
 
 -(void)updatedCurrentBottomPage:(NSUInteger)idx {
     currentBottomIdx = idx;
+    [self.currencyExchangeViewController reloadExchangeButton];
     [self.currencyExchangeViewController reloadTopCurrencyView];
     [self.currencyExchangeViewController reloadPageViews];
 }
@@ -228,6 +247,7 @@
         topText = [text copy];
 
     currentTopIdx = idx;
+    [self.currencyExchangeViewController reloadExchangeButton];
     [self.currencyExchangeViewController reloadPageViews];
 }
 
@@ -241,6 +261,7 @@
 #pragma mark Rate Provider Delegate
 
 - (void)rateProviderUpdatedCurrencyRates:(CurrencyRateProvider *)provider {
+    [self.currencyExchangeViewController reloadExchangeButton];
     [self.currencyExchangeViewController reloadTopCurrencyView];
     [self.currencyExchangeViewController reloadPageViews];
 }
