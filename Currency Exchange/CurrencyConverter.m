@@ -15,6 +15,9 @@
     convertedTo:(Currency *)secondCurrency
    rateProvider:(CurrencyRateProvider *)provider {
 
+    if ([currency isEqual:secondCurrency])
+        return value;
+
     double firstRate = [[provider rateForCurrency:currency] doubleValue];
     double secondRate = [[provider rateForCurrency:secondCurrency] doubleValue];
 
