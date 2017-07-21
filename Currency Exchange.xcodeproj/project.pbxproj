@@ -26,6 +26,7 @@
 		D3EF4F211F214CD600D812AF /* CurrencyExchangePageView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3EF4F201F214CD600D812AF /* CurrencyExchangePageView.m */; };
 		D3EF4F241F214F2A00D812AF /* CurrencyExchangePageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3EF4F231F214F2A00D812AF /* CurrencyExchangePageViewCell.m */; };
 		D3EF4F261F21643F00D812AF /* CurrencyExchangePageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3EF4F251F21643F00D812AF /* CurrencyExchangePageViewCell.xib */; };
+		D3EF4F281F22984400D812AF /* CurrencyExchangeViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3EF4F271F22984400D812AF /* CurrencyExchangeViewModelTests.m */; };
 		E4995D73E4A38D8272F88A40 /* libPods-Currency Exchange.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E98D7A10E1E8D7ED0021CD3 /* libPods-Currency Exchange.a */; };
 /* End PBXBuildFile section */
 
@@ -80,6 +81,7 @@
 		D3EF4F221F214F2A00D812AF /* CurrencyExchangePageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrencyExchangePageViewCell.h; sourceTree = "<group>"; };
 		D3EF4F231F214F2A00D812AF /* CurrencyExchangePageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrencyExchangePageViewCell.m; sourceTree = "<group>"; };
 		D3EF4F251F21643F00D812AF /* CurrencyExchangePageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CurrencyExchangePageViewCell.xib; sourceTree = "<group>"; };
+		D3EF4F271F22984400D812AF /* CurrencyExchangeViewModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrencyExchangeViewModelTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +172,7 @@
 				D3B32CBA1F20C5260037B97E /* Currency_ExchangeTests.m */,
 				D3EF4F0D1F20FC7000D812AF /* CurrencyRateTests.m */,
 				D3B32CBC1F20C5260037B97E /* Info.plist */,
+				D3EF4F271F22984400D812AF /* CurrencyExchangeViewModelTests.m */,
 			);
 			path = "Currency ExchangeTests";
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3EF4F281F22984400D812AF /* CurrencyExchangeViewModelTests.m in Sources */,
 				D3B32CBB1F20C5260037B97E /* Currency_ExchangeTests.m in Sources */,
 				D3EF4F0E1F20FC7000D812AF /* CurrencyRateTests.m in Sources */,
 			);
