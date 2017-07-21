@@ -24,6 +24,7 @@
 -(BOOL)canExchange;
 
 -(NSAttributedString *)textForTopCurrencyView;
+-(BOOL)shouldShowTopCurrencyView;
 -(NSUInteger)amountOfPages;
 -(NSString *)titleForPageAtIdx:(NSUInteger)idx;
 -(NSString *)leftSubtitleForPageAtIdx:(NSUInteger)idx;

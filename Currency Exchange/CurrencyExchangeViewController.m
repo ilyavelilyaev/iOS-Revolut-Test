@@ -118,6 +118,7 @@
 
 -(void)reloadTopCurrencyView {
     self.topCurrencyBoxExchangeRateLabel.attributedText = [self.viewModel textForTopCurrencyView];
+    [self.topCurrencyBoxView setHidden:![self.viewModel shouldShowTopCurrencyView]];
 }
 
 -(void)reloadPageControl {

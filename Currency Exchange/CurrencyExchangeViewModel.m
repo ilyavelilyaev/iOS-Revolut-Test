@@ -124,6 +124,10 @@
     return nil;
 }
 
+-(BOOL)shouldShowTopCurrencyView {
+    return ![self.topCurrency isEqual:self.bottomCurrency];
+}
+
 -(NSUInteger)amountOfPages {
     return user.balance.count;
 }
@@ -147,6 +151,8 @@
 
 -(NSString *)rightSubtitleForBottomPageAtIdx:(NSUInteger)idx {
     Currency *bottomCurrency = currencies[idx];
+    if ([bottomCurrency isEqual:self.topCurrency])
+        return nil;
 
     double value = [currencyConverter value:1
                                  inCurrency:bottomCurrency
