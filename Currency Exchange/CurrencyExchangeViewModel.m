@@ -58,7 +58,17 @@
 }
 
 -(BOOL)exchange {
-    return YES;
+    Currency *topCurrency = currencies[currentTopIdx];
+    Currency *bottomCurrency = currencies[currentBottomIdx];
+
+    double value = fabs([topText doubleValue]);
+
+    BOOL success = [user performTransactionFromCurrency:topCurrency
+                                                     to:bottomCurrency
+                                   valueInFirstCurrency:value
+                                           rateProvider:rateProvider];
+    
+    return success;
 }
 
 -(NSAttributedString *)textForTopCurrencyView {
@@ -108,8 +118,8 @@
 -(NSString *)leftSubtitleForPageAtIdx:(NSUInteger)idx {
     Currency *current = currencies[idx];
     NSString *symbol = current.symbol;
-    NSString *balance = [user.balance[current] stringValue];
-    return [NSString stringWithFormat:@"You have %@%@", symbol, balance];
+    double balance = [user.balance[current] doubleValue];
+    return [NSString stringWithFormat:@"You have %@%.2lf", symbol, balance];
 }
 
 -(NSString *)rightSubtitleForBottomPageAtIdx:(NSUInteger)idx {

@@ -64,6 +64,23 @@
     NSLog(@"%s", __FUNCTION__);
 }
 
+- (IBAction)exchangeButtonPressed:(UIButton *)sender {
+    BOOL success = [self.viewModel exchange];
+    if (!success) {
+        UIAlertController *alertController = [UIAlertController
+                                              alertControllerWithTitle:@"Error!"
+                                              message:@"Error while exchanging funds."
+                                              preferredStyle: UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:nil];
+        [alertController addAction:okAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+        return;
+    }
+    [self reloadPageViews];
+}
+
 #pragma mark UI Adjustment Methods
 
 -(void)keyboardWillAppear:(NSNotification *)notification {
@@ -94,6 +111,7 @@
     }
 
 }
+
 
 #pragma mark Reload UI methods
 
