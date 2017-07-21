@@ -154,7 +154,23 @@
     return [self processTextForInputField:topText value:topValue];
 }
 
+-(NSString *)textFieldTextForBottomPageAtIdx:(NSUInteger)idx {
+
+    double topValue = fabs([topText doubleValue]);
+
+    double bottomValue = [currencyConverter value:topValue
+                                       inCurrency:currencies[currentTopIdx]
+                                      convertedTo:currencies[idx]
+                                     rateProvider:rateProvider];
+    if (isfinite(bottomValue))
+        return [self processTextForInputField:nil value:bottomValue];
+
+    return nil;
+}
+
 -(NSString *)processTextForInputField:(NSString *)text value:(double)value {
+    if (text == nil && fabs(value) < 0.005)
+        return nil;
 
     NSMutableString *stringToReturn = [[formatter
                                         stringFromNumber:[NSNumber numberWithDouble:value]] mutableCopy];
@@ -169,6 +185,9 @@
         [stringToReturn appendString:[NSString stringWithCharacters:&lastChar length:1]];
     }
 
+    if ([text length] < 2)
+        return stringToReturn;
+
     unichar lastButOneChar = [text characterAtIndex:([text length] - 2)];
     unichar *characters = (unichar *)malloc(sizeof(unichar) * 2);
     characters[0] = lastButOneChar;
@@ -180,20 +199,6 @@
     }
 
     return stringToReturn;
-}
-
--(NSString *)textFieldTextForBottomPageAtIdx:(NSUInteger)idx {
-
-    double topValue = fabs([topText doubleValue]);
-
-    double bottomValue = [currencyConverter value:topValue
-                                       inCurrency:currencies[currentTopIdx]
-                                      convertedTo:currencies[idx]
-                                     rateProvider:rateProvider];
-    if (isfinite(bottomValue))
-        return [self processTextForInputField:nil value:bottomValue];
-
-    return nil;
 }
 
 -(BOOL)editingActiveForTopPage {
@@ -217,7 +222,11 @@
 }
 
 -(void)updatedTopTextAt:(NSUInteger)idx text:(NSString *)text {
-    topText = [text copy];
+    if ([text isEqualToString:@"-"])
+        topText = nil;
+    else
+        topText = [text copy];
+
     currentTopIdx = idx;
     [self.currencyExchangeViewController reloadPageViews];
 }
