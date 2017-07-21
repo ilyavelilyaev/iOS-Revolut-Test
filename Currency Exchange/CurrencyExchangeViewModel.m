@@ -72,6 +72,8 @@
 }
 
 -(BOOL)canExchange {
+    if (!rateProvider.ratesLoaded) return NO;
+
     double value = fabs([topText doubleValue]);
 
     return [user canPerformTransactionFromCurrency:self.topCurrency
@@ -125,7 +127,7 @@
 }
 
 -(BOOL)shouldShowTopCurrencyView {
-    return ![self.topCurrency isEqual:self.bottomCurrency];
+    return (![self.topCurrency isEqual:self.bottomCurrency]) && rateProvider.ratesLoaded;
 }
 
 -(NSUInteger)amountOfPages {

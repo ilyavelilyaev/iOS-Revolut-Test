@@ -14,7 +14,9 @@
 
 @interface CurrencyRateProvider : NSObject
 
+@property (readonly) BOOL ratesLoaded;
 @property (nonatomic, weak) id <CurrencyRateProviderDelegate> delegate;
+
 - (NSNumber *)rateForCurrency:(Currency *)currency;
 - (void)startUpdatingCurrencyWithInterval:(NSTimeInterval)interval;
 - (void)stopUpdatingCurrency;

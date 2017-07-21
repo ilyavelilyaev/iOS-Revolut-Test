@@ -26,6 +26,7 @@
     self = [super init];
     if (self) {
         _fetcher = [[CurrencyFetcher alloc] init];
+        _ratesLoaded = NO;
     }
     return self;
 }
@@ -58,6 +59,9 @@
         @strongify(self)
         self.cache = currencyRateDictionary;
         [self.delegate rateProviderUpdatedCurrencyRates:self];
+        if (currencyRateDictionary && [currencyRateDictionary count] > 0) {
+            _ratesLoaded = YES;
+        }
     }];
 }
 
