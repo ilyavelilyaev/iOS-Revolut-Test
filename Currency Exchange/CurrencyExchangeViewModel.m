@@ -12,6 +12,11 @@
 #import "NSDecimalNumber+absoluteValue.h"
 #import "NSNumberFormatter+AvoidZeroSign.h"
 
+typedef NS_ENUM(NSUInteger, ActivePage) {
+    ActivePageTop,
+    ActivePageBottom
+};
+
 @interface CurrencyExchangeViewModel () {
 
     CurrencyRateProvider *rateProvider;
@@ -20,12 +25,14 @@
     NSArray *currencies;
 
     NSString *topText;
+    NSString *bottomText;
 
     NSUInteger currentTopIdx;
     NSUInteger currentBottomIdx;
 
     NSNumberFormatter *formatter;
 
+    ActivePage activePage;
 }
 
 @property (nonatomic, readonly, getter=topCurrency) Currency *topCurrency;
@@ -51,6 +58,8 @@
         formatter.positivePrefix = @"+";
 
         currencyConverter = [[CurrencyConverter alloc] init];
+
+        activePage = ActivePageTop;
     }
     return self;
 }
@@ -195,28 +204,50 @@
 }
 
 -(NSString *)textFieldTextForTopPageAtIdx:(NSUInteger)idx {
+    if (activePage == ActivePageTop) {
+        if (!topText || [topText length] == 0) return nil;
 
-    if (!topText || [topText length] == 0) return nil;
+        NSDecimalNumber *topValue = [[NSDecimalNumber decimalNumberWithString:topText] negativeAbsoluteValue];
 
-    NSDecimalNumber *topValue = [[NSDecimalNumber decimalNumberWithString:topText] negativeAbsoluteValue];
+        return [self processTextForInputField:topText value:topValue];
+    }
 
+    if (!bottomText || [bottomText length] == 0) return nil;
 
-    return [self processTextForInputField:topText value:topValue];
+    NSDecimalNumber *bottomValue = [[NSDecimalNumber decimalNumberWithString:bottomText] absoluteValue];
+
+    NSDecimalNumber *topValue = [[currencyConverter value:bottomValue
+                                               inCurrency:self.bottomCurrency
+                                              convertedTo:currencies[idx]
+                                             rateProvider:rateProvider
+                                               roundScale:2] negativeAbsoluteValue];
+
+    NSString *text = [self processTextForInputField:nil value:topValue];
+    if (currentTopIdx == idx) topText = text;
+    return text;
 }
 
 -(NSString *)textFieldTextForBottomPageAtIdx:(NSUInteger)idx {
-    
-    if (!topText || [topText length] == 0) return nil;
+    if (activePage == ActivePageTop) {
+        if (!topText || [topText length] == 0) return nil;
 
-    NSDecimalNumber *topValue = [[NSDecimalNumber decimalNumberWithString:topText] absoluteValue];
+        NSDecimalNumber *topValue = [[NSDecimalNumber decimalNumberWithString:topText] absoluteValue];
 
-    NSDecimalNumber *bottomValue = [currencyConverter value:topValue
-                                                 inCurrency:self.topCurrency
-                                                convertedTo:currencies[idx]
-                                               rateProvider:rateProvider
-                                                 roundScale:2];
+        NSDecimalNumber *bottomValue = [currencyConverter value:topValue
+                                                     inCurrency:self.topCurrency
+                                                    convertedTo:currencies[idx]
+                                                   rateProvider:rateProvider
+                                                     roundScale:2];
 
-    return [self processTextForInputField:nil value:bottomValue];
+        NSString *text = [self processTextForInputField:nil value:bottomValue];
+        if (currentBottomIdx == idx) bottomText = text;
+        return text;
+    }
+
+    if (!bottomText || [bottomText length] == 0) return nil;
+    NSDecimalNumber *bottomValue = [[NSDecimalNumber decimalNumberWithString:bottomText] absoluteValue];
+
+    return [self processTextForInputField:bottomText value:bottomValue];
 }
 
 -(NSString *)processTextForInputField:(NSString *)text value:(NSDecimalNumber *)value {
@@ -252,51 +283,68 @@
 }
 
 -(BOOL)editingActiveForTopPage {
-    return YES;
+    return activePage == ActivePageTop;
 }
 
 -(BOOL)editingActiveForBottomPage {
-    return NO;
+    return activePage == ActivePageBottom;
 }
 
 -(void)updatedCurrentTopPage:(NSUInteger)idx {
     currentTopIdx = idx;
+    [self.currencyExchangeViewController reloadPageViews];
     [self.currencyExchangeViewController reloadExchangeButton];
     [self.currencyExchangeViewController reloadTopCurrencyView];
-    [self.currencyExchangeViewController reloadPageViews];
 }
 
 -(void)updatedCurrentBottomPage:(NSUInteger)idx {
     currentBottomIdx = idx;
+    [self.currencyExchangeViewController reloadPageViews];
     [self.currencyExchangeViewController reloadExchangeButton];
     [self.currencyExchangeViewController reloadTopCurrencyView];
-    [self.currencyExchangeViewController reloadPageViews];
 }
 
 -(void)updatedTopTextAt:(NSUInteger)idx text:(NSString *)text {
-    if ([text isEqualToString:@"-"])
+    if ([text isEqualToString:@"-"] || [text isEqualToString:@""])
         topText = nil;
     else
         topText = [text copy];
 
     currentTopIdx = idx;
-    [self.currencyExchangeViewController reloadExchangeButton];
     [self.currencyExchangeViewController reloadPageViews];
+    [self.currencyExchangeViewController reloadExchangeButton];
 }
 
 -(void)updatedBottomTextAt:(NSUInteger)idx text:(NSString *)text {
+    if ([text isEqualToString:@"+"] || [text isEqualToString:@""])
+        bottomText = nil;
+    else
+        bottomText = [text copy];
 
+    currentBottomIdx = idx;
+    [self.currencyExchangeViewController reloadPageViews];
+    [self.currencyExchangeViewController reloadExchangeButton];
 }
 
+-(void)tappedOnTopPageView {
+    activePage = ActivePageTop;
+    [self.currencyExchangeViewController reloadPageViews];
+    [self.currencyExchangeViewController reloadExchangeButton];
+}
 
+-(void)tappedOnBottomPageView {
+    activePage = ActivePageBottom;
+    [self.currencyExchangeViewController reloadPageViews];
+    [self.currencyExchangeViewController reloadExchangeButton];
+}
 
 
 #pragma mark Rate Provider Delegate
 
 - (void)rateProviderUpdatedCurrencyRates:(CurrencyRateProvider *)provider {
+    [self.currencyExchangeViewController reloadPageViews];
     [self.currencyExchangeViewController reloadExchangeButton];
     [self.currencyExchangeViewController reloadTopCurrencyView];
-    [self.currencyExchangeViewController reloadPageViews];
 }
 
 

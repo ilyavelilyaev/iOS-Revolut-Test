@@ -72,6 +72,7 @@
     self.scrollView.contentSize = objectsCount == 0 ? CGSizeZero : CGSizeMake(width * 3, height);
     self.scrollView.contentOffset = CGPointMake(self.scrollView.contentSize.width / 3, 0);
     [self configureCellsFrames];
+    [self updateFirstResponder];
 }
 
 -(void)configureCellsFrames {
@@ -104,10 +105,8 @@
     [cell setRightSubtitle:[self.dataSource rightSubtitleForPage:self at:objectIdx]];
     [cell setTextFieldText:[self.dataSource textFieldTextForPage:self at:objectIdx]];
     [cell setLeftSubtitleColor:[self.dataSource leftSubtitleColorForPage:self at:objectIdx]];
+    [cell setUserInteractionEnabled:isActive];
 
-    if (cellIdx == 1 && isActive) {
-        [cell becomeFirstResponder];
-    }
 }
 
 -(void)reloadData {
@@ -144,6 +143,8 @@
     [self configureVisibleCells];
     self.scrollView.contentOffset = CGPointMake(self.scrollView.contentSize.width / 3, 0);
     self.scrollView.scrollEnabled = YES;
+
+    [self updateFirstResponder];
 }
 
 
@@ -156,5 +157,10 @@
     [self.delegate pageView:self didChangeTextFieldTextAt:currentIdxShowing text:value];
 }
 
+-(void)updateFirstResponder {
+    NSUInteger realIdx = [self.cellPositionArray indexOfObject:[NSNumber numberWithUnsignedInteger:1]];
+    CurrencyExchangePageViewCell *cell = self.cellsArray[realIdx];
+    [cell becomeFirstResponder];
+}
 
 @end

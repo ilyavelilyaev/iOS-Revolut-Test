@@ -64,6 +64,14 @@
     NSLog(@"%s", __FUNCTION__);
 }
 
+- (IBAction)topPageViewPressed:(UITapGestureRecognizer *)sender {
+    [self.viewModel tappedOnTopPageView];
+}
+
+- (IBAction)bottomPageViewPressed:(UITapGestureRecognizer *)sender {
+    [self.viewModel tappedOnBottomPageView];
+}
+
 - (IBAction)exchangeButtonPressed:(UIButton *)sender {
     BOOL success = [self.viewModel exchange];
     if (!success) {

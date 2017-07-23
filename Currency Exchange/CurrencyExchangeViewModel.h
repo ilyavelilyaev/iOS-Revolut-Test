@@ -41,5 +41,7 @@
 -(void)updatedTopTextAt:(NSUInteger)idx text:(NSString *)text;
 -(void)updatedBottomTextAt:(NSUInteger)idx text:(NSString *)text;
 
+-(void)tappedOnTopPageView;
+-(void)tappedOnBottomPageView;
 
 @end

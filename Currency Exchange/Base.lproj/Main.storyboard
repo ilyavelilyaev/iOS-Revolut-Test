@@ -106,6 +106,10 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gat-ud-zwO" customClass="CurrencyExchangePageView">
                                         <rect key="frame" x="0.0" y="8" width="375" height="116"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="rND-PO-OU7" appends="YES" id="vur-xC-vO0"/>
+                                        </connections>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -131,6 +135,10 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QaE-Y9-zQ3" customClass="CurrencyExchangePageView">
                                         <rect key="frame" x="0.0" y="8" width="375" height="116"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="5mG-dt-W36" appends="YES" id="jpw-f3-XC5"/>
+                                        </connections>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -183,6 +191,16 @@
                 <tapGestureRecognizer id="rEY-MC-GZe">
                     <connections>
                         <action selector="topCurrencyBoxPressed:" destination="BYZ-38-t0r" id="awx-AM-fgQ"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="rND-PO-OU7">
+                    <connections>
+                        <action selector="topPageViewPressed:" destination="BYZ-38-t0r" id="74U-b0-BEi"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="5mG-dt-W36">
+                    <connections>
+                        <action selector="bottomPageViewPressed:" destination="BYZ-38-t0r" id="tmd-dF-j97"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
