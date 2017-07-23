@@ -31,8 +31,8 @@
     return self;
 }
 
-- (NSNumber *)rateForCurrency:(Currency *)currency {
-    if ([currency.code isEqualToString:@"EUR"]) { return @1.0; }
+- (NSDecimalNumber *)rateForCurrency:(Currency *)currency {
+    if ([currency.code isEqualToString:@"EUR"]) { return [NSDecimalNumber one]; }
     return self.cache[currency.code];
 }
 

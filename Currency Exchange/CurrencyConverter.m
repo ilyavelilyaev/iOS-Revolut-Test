@@ -10,18 +10,28 @@
 
 @implementation CurrencyConverter
 
-- (double)value:(double)value
-     inCurrency:(Currency *)currency
-    convertedTo:(Currency *)secondCurrency
-   rateProvider:(CurrencyRateProvider *)provider {
+- (NSDecimalNumber *)value:(NSDecimalNumber *)value
+                inCurrency:(Currency *)currency
+               convertedTo:(Currency *)secondCurrency
+              rateProvider:(CurrencyRateProvider *)provider
+                roundScale:(NSInteger)scale {
 
     if ([currency isEqual:secondCurrency])
         return value;
 
-    double firstRate = [[provider rateForCurrency:currency] doubleValue];
-    double secondRate = [[provider rateForCurrency:secondCurrency] doubleValue];
+    NSDecimalNumber *firstRate = [provider rateForCurrency:currency];
+    NSDecimalNumber *secondRate = [provider rateForCurrency:secondCurrency];
 
-    return value / firstRate * secondRate;
+    if (!firstRate || !secondRate) return nil;
+
+    NSDecimalNumber *result = [[value decimalNumberByDividingBy:firstRate] decimalNumberByMultiplyingBy:secondRate];
+
+    NSDecimal decimalBeforeRounding = [result decimalValue];
+    NSDecimal decimalAfterRounding;
+
+    NSDecimalRound(&decimalAfterRounding, &decimalBeforeRounding, scale, NSRoundBankers);
+
+    return [NSDecimalNumber decimalNumberWithDecimal:decimalAfterRounding];
 }
 
 

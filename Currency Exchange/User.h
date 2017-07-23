@@ -20,12 +20,12 @@
  */
 - (BOOL)performTransactionFromCurrency:(Currency *)fromCurrency
                                     to:(Currency *)toCurrency
-                  valueInFirstCurrency:(double)value
+                  valueInFirstCurrency:(NSDecimalNumber *)value
                           rateProvider:(CurrencyRateProvider *)provider;
 
 - (BOOL)canPerformTransactionFromCurrency:(Currency *)fromCurrency
                                     to:(Currency *)toCurrency
-                  valueInFirstCurrency:(double)value
+                  valueInFirstCurrency:(NSDecimalNumber *)value
                           rateProvider:(CurrencyRateProvider *)provider;
 
 @end

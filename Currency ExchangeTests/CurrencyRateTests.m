@@ -57,18 +57,27 @@
     Currency *eur = [Currency eurCurrency];
     Currency *usd = [Currency usdCurrency];
 
-    double eurToEurCheck = [converter value:1 inCurrency: eur convertedTo:eur rateProvider:self.provider];
+    NSDecimalNumber *eurToEurCheck = [converter value:[NSDecimalNumber one] inCurrency: eur convertedTo:eur rateProvider:self.provider roundScale:2];
 
-    XCTAssert(eurToEurCheck == 1);
+    XCTAssert([eurToEurCheck compare:[NSDecimalNumber one]] == NSOrderedSame);
 
 
-    double usdRate = [[self.provider rateForCurrency:usd] doubleValue];
+    NSDecimalNumber *usdRate = [self.provider rateForCurrency:usd];
 
-    double expectedresult = usdRate * 3;
+    NSDecimalNumber *three = [NSDecimalNumber decimalNumberWithMantissa:3 exponent:0 isNegative:NO];
+    NSDecimalNumber *expectedresult = [usdRate decimalNumberByMultiplyingBy:three];
 
-    double eurToUsdCheck = [converter value:3 inCurrency:eur convertedTo:usd rateProvider:self.provider];
+    NSDecimalNumber *eurToUsdCheck = [converter value:three inCurrency:eur convertedTo:usd rateProvider:self.provider roundScale:2];
 
-    XCTAssert(expectedresult == eurToUsdCheck);
+    NSDecimalNumberHandler *behaviour = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers
+                                                                                               scale:2
+                                                                                    raiseOnExactness:NO
+                                                                                     raiseOnOverflow:NO
+                                                                                    raiseOnUnderflow:NO
+                                                                                 raiseOnDivideByZero:NO];
+
+
+    XCTAssert([[expectedresult decimalNumberByRoundingAccordingToBehavior:behaviour] isEqualToNumber:eurToUsdCheck]);
 }
 
 - (void)testUserTransaction {
@@ -77,21 +86,28 @@
     Currency *usd = [Currency usdCurrency];
     Currency *eur = [Currency gbpCurrency];
 
-    BOOL success = [user performTransactionFromCurrency:usd to:eur valueInFirstCurrency:150 rateProvider:self.provider];
+    NSDecimalNumber *hundredFifty = [NSDecimalNumber decimalNumberWithMantissa:150 exponent:0 isNegative:NO];
+
+    BOOL success = [user performTransactionFromCurrency:usd to:eur valueInFirstCurrency:hundredFifty rateProvider:self.provider];
 
     XCTAssert(success == false);
 
-    BOOL success1 = [user performTransactionFromCurrency:usd to:eur valueInFirstCurrency:34 rateProvider:self.provider];
+    NSDecimalNumber *thirtyFour = [NSDecimalNumber decimalNumberWithMantissa:34 exponent:0 isNegative:NO];
+
+    BOOL success1 = [user performTransactionFromCurrency:usd to:eur valueInFirstCurrency:thirtyFour rateProvider:self.provider];
 
     XCTAssert(success1);
 
     CurrencyConverter *converter = [[CurrencyConverter alloc] init];
-    double eurosFromUsd = [converter value:34 inCurrency:usd convertedTo:eur rateProvider:self.provider];
+    NSDecimalNumber *eurosFromUsd = [converter value:thirtyFour inCurrency:usd convertedTo:eur rateProvider:self.provider roundScale:2];
 
     XCTAssert([user.balance[usd] doubleValue] == (100.0 - 34.0));
-    XCTAssert([user.balance[eur] doubleValue] == (100.0 + eurosFromUsd));
+    XCTAssert([user.balance[eur] doubleValue] == (100.0 + [eurosFromUsd doubleValue]));
 
-    BOOL success2 = [user performTransactionFromCurrency:usd to:eur valueInFirstCurrency:80 rateProvider:self.provider];
+
+    NSDecimalNumber *eighty = [NSDecimalNumber decimalNumberWithMantissa:80 exponent:0 isNegative:NO];
+
+    BOOL success2 = [user performTransactionFromCurrency:usd to:eur valueInFirstCurrency:eighty rateProvider:self.provider];
 
     XCTAssert(success2 == false);
 

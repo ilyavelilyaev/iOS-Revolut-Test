@@ -113,36 +113,6 @@
 
 }
 
-    // Including many tests in one function as it takes long to set up
-- (void)testLeftSubtitleSmallBalance {
-
-        // 1: Transfer all money from 1st currency to 3rd;
-    [self.viewModel updatedCurrentBottomPage:2];
-    [self.viewModel updatedTopTextAt:0 text:@"100"];
-
-    XCTAssert([self.viewModel exchange]);
-
-        // 2: Transfer all money from 2nd currency to 3rd;
-    [self.viewModel updatedCurrentTopPage:1];
-    [self.viewModel updatedTopTextAt:1 text:@"100"];
-
-    XCTAssert([self.viewModel exchange]);
-
-        // 3: Make 3rd page on the top, read balance;
-    [self.viewModel updatedCurrentTopPage:2];
-    NSString *leftSubtitle = [self.viewModel leftSubtitleForPageAtIdx:2];
-    NSString *amount = [leftSubtitle substringFromIndex:10];
-
-        // 3: Transfer all shown money from 3rd currency to 1st;
-    [self.viewModel updatedCurrentBottomPage:0];
-    [self.viewModel updatedTopTextAt:2 text:amount];
-
-    XCTAssert([self.viewModel exchange]);
-
-        // 4: Because of currency rates there should less than 0.01 left on 3rd currency.
-    leftSubtitle = [self.viewModel leftSubtitleForPageAtIdx:2];
-    XCTAssert([leftSubtitle containsString:@"<"]);
-}
 
 - (void)testShowingNothingInTopCurrencyBoxWhenRatesAreNotLoaded {
 
@@ -196,18 +166,11 @@
     [self.viewModel updatedTopTextAt:0 text:@"-"];
     XCTAssert([self.viewModel textFieldTextForTopPageAtIdx:0] == nil);
 
-        //7: Should add zero if user starts with decimal point
-    [self.viewModel updatedTopTextAt:0 text:@"."];
-    XCTAssert([[self.viewModel textFieldTextForTopPageAtIdx:0] isEqualToString:@"-0."]);
-
-    [self.viewModel updatedTopTextAt:0 text:@","];
-    XCTAssert([[self.viewModel textFieldTextForTopPageAtIdx:0] isEqualToString:@"-0,"]);
-
-        //8: Should work well when there is minus in front
+        //7: Should work well when there is minus in front
     [self.viewModel updatedTopTextAt:0 text:@"-10"];
     XCTAssert([[self.viewModel textFieldTextForTopPageAtIdx:0] isEqualToString:@"-10"]);
 
-        //9: Should show the same value on all pages
+        //8: Should show the same value on all pages
     [self.viewModel updatedTopTextAt:0 text:@"-10"];
     for (int i = 0; i < [self.viewModel amountOfPages]; i++) {
         XCTAssert([[self.viewModel textFieldTextForTopPageAtIdx:i] isEqualToString:@"-10"]);
@@ -247,20 +210,19 @@
     [self.viewModel updatedTopTextAt:0 text:@"100"];
     XCTAssert([self.viewModel canExchange]);
 
-        //5: Should be able to exchange minimum value if it will be more than 0.01 in "To" currency
-            // I suggest GBP > USD
-            // find GBP & Enter minimum amount in GBP (0.01)
+        //5: Should be able to exchange minimum value if it will be more than $1
+            // find USD & exchange
     int count = (int)[self.viewModel amountOfPages];
     for (int i = 0; i < count; i++) {
-        if ([[self.viewModel titleForPageAtIdx:i] isEqualToString:@"GBP"]) {
+        if ([[self.viewModel titleForPageAtIdx:i] isEqualToString:@"USD"]) {
             [self.viewModel updatedCurrentTopPage:i];
-            [self.viewModel updatedTopTextAt:i text:@"0.01"];
+            [self.viewModel updatedTopTextAt:i text:@"1"];
             break;
         }
     }
-            // find USD
+            // find any other
     for (int i = 0; i < count; i++) {
-        if ([[self.viewModel titleForPageAtIdx:i] isEqualToString:@"USD"]) {
+        if ([[self.viewModel titleForPageAtIdx:i] isEqualToString:@"GBP"]) {
             [self.viewModel updatedCurrentBottomPage:i];
             break;
         }
@@ -268,14 +230,12 @@
 
     XCTAssert([self.viewModel canExchange]);
 
-        //6: Should not be able opposite exchange (when result will be less 0.01)
-        //P.S. Just copying here
-            // I suggest GBP > USD
-            // find USD & Enter minimum amount in USD (0.01)
+        //6: Should not be able opposite exchange less than $1
+            // find USD & Enter minimum amount in USD (0.99)
     for (int i = 0; i < count; i++) {
         if ([[self.viewModel titleForPageAtIdx:i] isEqualToString:@"USD"]) {
             [self.viewModel updatedCurrentTopPage:i];
-            [self.viewModel updatedTopTextAt:i text:@"0.01"];
+            [self.viewModel updatedTopTextAt:i text:@"0.99"];
             break;
         }
     }
@@ -308,7 +268,7 @@
     NSString *leftSubtitle0 = [self.viewModel leftSubtitleForPageAtIdx:0];
     NSString *strAmount0 = [leftSubtitle0 substringFromIndex:10];
 
-    XCTAssert([strAmount0 isEqualToString:@"50.00"]);
+    XCTAssert([strAmount0 isEqualToString:@"50"]);
 
     leftSubtitle1 = [self.viewModel leftSubtitleForPageAtIdx:1];
     strAmount1 = [leftSubtitle1 substringFromIndex:10];

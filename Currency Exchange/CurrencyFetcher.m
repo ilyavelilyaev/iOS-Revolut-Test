@@ -41,7 +41,7 @@ NSString *const ratesURL = @"http://www.ecb.europa.eu/stats/eurofxref/eurofxref-
     for (NSUInteger i = 0; i < count; i++) {
         NSString *currency = currencies[i][@"_currency"];
         NSString *stringRate = currencies[i][@"_rate"];
-        NSNumber *rate = [NSNumber numberWithDouble:[stringRate doubleValue]];
+        NSDecimalNumber *rate = [NSDecimalNumber decimalNumberWithString:stringRate];
         [dictionary setObject:rate forKey:currency];
     }
 

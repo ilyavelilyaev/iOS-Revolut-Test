@@ -9,6 +9,8 @@
 #import "CurrencyExchangeViewModel.h"
 #import "User.h"
 #import "CurrencyConverter.h"
+#import "NSDecimalNumber+absoluteValue.h"
+#import "NSNumberFormatter+AvoidZeroSign.h"
 
 @interface CurrencyExchangeViewModel () {
 
@@ -73,8 +75,9 @@
 
 -(BOOL)canExchange {
     if (!rateProvider.ratesLoaded) return NO;
-
-    double value = fabs([topText doubleValue]);
+    if (!topText || [topText length] == 0) return NO;
+    
+    NSDecimalNumber *value = [[NSDecimalNumber decimalNumberWithString:topText] absoluteValue];
 
     return [user canPerformTransactionFromCurrency:self.topCurrency
                                                 to:self.bottomCurrency
@@ -83,7 +86,8 @@
 }
 
 -(BOOL)exchange {
-    double value = fabs([topText doubleValue]);
+
+    NSDecimalNumber *value = [[NSDecimalNumber decimalNumberWithString:topText] absoluteValue];
 
     BOOL success = [user performTransactionFromCurrency:self.topCurrency
                                                      to:self.bottomCurrency
@@ -95,26 +99,39 @@
 
 -(NSAttributedString *)textForTopCurrencyView {
 
-    double value = [currencyConverter value:1
-                                 inCurrency:self.topCurrency
-                                convertedTo:self.bottomCurrency
-                               rateProvider:rateProvider];
+    NSDecimalNumber *value = [currencyConverter value:[NSDecimalNumber one]
+                                           inCurrency:self.topCurrency
+                                          convertedTo:self.bottomCurrency
+                                         rateProvider:rateProvider
+                                           roundScale:4];
 
-    if (isfinite(value) && value != 0) {
-        NSString *stringToShow = [NSString stringWithFormat:@"%@1=%@%.4f", self.topCurrency.symbol,
-                                  self.bottomCurrency.symbol, value];
+    if (!([value compare:[NSDecimalNumber zero]] == NSOrderedSame)) {
+
+        NSString *valueString = [value stringValue];
+        NSString *stringToShow = [NSString stringWithFormat:@"%@1=%@%@", self.topCurrency.symbol,
+                                  self.bottomCurrency.symbol, valueString];
+
         NSMutableAttributedString *attributedStringToShow = [[NSMutableAttributedString alloc]
                                                              initWithString:stringToShow];
+
         UIFont *largeFont = [UIFont systemFontOfSize:18.0 weight: UIFontWeightLight];
         UIFont *smallFont = [largeFont fontWithSize:13.0];
 
+        NSDecimalNumber *integerPart = [NSDecimalNumber decimalNumberWithMantissa:[value integerValue]
+                                                                         exponent:0
+                                                                       isNegative:([value integerValue] < 0)];
+        NSDecimalNumber *fractionalPart = [value decimalNumberBySubtracting:integerPart];
+
+        NSInteger smallDigitsCount = [[fractionalPart stringValue] length] - 4;
+        if (smallDigitsCount < 0) smallDigitsCount = 0;
+
         [attributedStringToShow addAttribute:NSFontAttributeName
                                        value:largeFont
-                                       range:NSMakeRange(0, [stringToShow length] - 2)];
+                                       range:NSMakeRange(0, [stringToShow length] - smallDigitsCount)];
 
         [attributedStringToShow addAttribute:NSFontAttributeName
                                        value:smallFont
-                                       range:NSMakeRange([stringToShow length] - 2, 2)];
+                                       range:NSMakeRange([stringToShow length] - smallDigitsCount, smallDigitsCount)];
 
         [attributedStringToShow addAttribute:NSForegroundColorAttributeName
                                        value:[UIColor whiteColor]
@@ -142,13 +159,9 @@
 -(NSString *)leftSubtitleForPageAtIdx:(NSUInteger)idx {
     Currency *current = currencies[idx];
     NSString *symbol = current.symbol;
-    double balance = [user.balance[current] doubleValue];
+    NSDecimalNumber *balance = user.balance[current];
 
-    if (balance < 0.01 && balance > 0)
-        return [NSString stringWithFormat:@"You have <%@0.01", symbol];
-
-    balance = 0.01 * (floor(balance * 100));
-    return [NSString stringWithFormat:@"You have %@%.2lf", symbol, balance];
+    return [NSString stringWithFormat:@"You have %@%@", symbol, [balance stringValue]];
 }
 
 -(NSString *)rightSubtitleForBottomPageAtIdx:(NSUInteger)idx {
@@ -156,22 +169,26 @@
     if ([bottomCurrency isEqual:self.topCurrency])
         return nil;
 
-    double value = [currencyConverter value:1
+    NSDecimalNumber *value = [currencyConverter value:[NSDecimalNumber one]
                                  inCurrency:bottomCurrency
                                 convertedTo:self.topCurrency
-                               rateProvider:rateProvider];
+                               rateProvider:rateProvider
+                                 roundScale:2];
 
-    if (isfinite(value) && value != 0)
-        return [NSString stringWithFormat:@"%@1=%@%.2lf", bottomCurrency.symbol, self.topCurrency.symbol, value];
+    if (!([value compare:[NSDecimalNumber zero]] == NSOrderedSame))
+        return [NSString stringWithFormat:@"%@1=%@%@", bottomCurrency.symbol, self.topCurrency.symbol, value];
 
     return nil;
 }
 
 -(UIColor *)leftSubtitleColorForTopPageAtIdx:(NSUInteger)idx {
-    Currency *current = currencies[idx];
-    double balance = [user.balance[current] doubleValue];
+    if (!topText || [topText length] == 0) return [UIColor whiteColor];
 
-    if (fabs([topText doubleValue]) > balance)
+    Currency *current = currencies[idx];
+    NSDecimalNumber *balance = user.balance[current];
+    NSDecimalNumber *topValue = [[NSDecimalNumber decimalNumberWithString:topText] absoluteValue];
+
+    if ([topValue compare:balance] == NSOrderedDescending)
         return [UIColor redColor];
 
     return [UIColor whiteColor];
@@ -179,31 +196,34 @@
 
 -(NSString *)textFieldTextForTopPageAtIdx:(NSUInteger)idx {
 
-    double topValue = -fabs([topText doubleValue]);
+    if (!topText || [topText length] == 0) return nil;
+
+    NSDecimalNumber *topValue = [[NSDecimalNumber decimalNumberWithString:topText] negativeAbsoluteValue];
+
 
     return [self processTextForInputField:topText value:topValue];
 }
 
 -(NSString *)textFieldTextForBottomPageAtIdx:(NSUInteger)idx {
+    
+    if (!topText || [topText length] == 0) return nil;
 
-    double topValue = fabs([topText doubleValue]);
+    NSDecimalNumber *topValue = [[NSDecimalNumber decimalNumberWithString:topText] absoluteValue];
 
-    double bottomValue = [currencyConverter value:topValue
-                                       inCurrency:self.topCurrency
-                                      convertedTo:currencies[idx]
-                                     rateProvider:rateProvider];
-    if (isfinite(bottomValue))
-        return [self processTextForInputField:nil value:bottomValue];
+    NSDecimalNumber *bottomValue = [currencyConverter value:topValue
+                                                 inCurrency:self.topCurrency
+                                                convertedTo:currencies[idx]
+                                               rateProvider:rateProvider
+                                                 roundScale:2];
 
-    return nil;
+    return [self processTextForInputField:nil value:bottomValue];
 }
 
--(NSString *)processTextForInputField:(NSString *)text value:(double)value {
-    if (text == nil && fabs(value) < 0.005)
+-(NSString *)processTextForInputField:(NSString *)text value:(NSDecimalNumber *)value {
+    if (text == nil && ([value compare:[NSDecimalNumber zero]] == NSOrderedSame))
         return nil;
 
-    NSMutableString *stringToReturn = [[formatter
-                                        stringFromNumber:[NSNumber numberWithDouble:value]] mutableCopy];
+    NSMutableString *stringToReturn = [[formatter stringFromNumberAvoidingZeroSign:value] mutableCopy];
 
     unichar lastChar = [text characterAtIndex:([text length] - 1)];
     unichar fullStop = 46;

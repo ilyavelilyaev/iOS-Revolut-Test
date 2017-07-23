@@ -16,7 +16,10 @@
     self = [super init];
     if (self) {
         NSArray *keys = @[[Currency eurCurrency], [Currency usdCurrency], [Currency gbpCurrency]];
-        NSArray *objects = @[@100, @100, @100];
+
+        NSDecimalNumber  *hundred = [NSDecimalNumber decimalNumberWithString:@"100"];
+        NSArray *objects = @[hundred, [hundred copy], [hundred copy]];
+
         _balance = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
     }
     return self;
@@ -24,26 +27,26 @@
 
 - (BOOL)performTransactionFromCurrency:(Currency *)fromCurrency
                                     to:(Currency *)toCurrency
-                  valueInFirstCurrency:(double)value
+                  valueInFirstCurrency:(NSDecimalNumber *)value
                           rateProvider:(CurrencyRateProvider *)provider {
 
     if ([fromCurrency isEqual:toCurrency]) { return YES; }
 
-    double fromBalance = [self.balance[fromCurrency] doubleValue];
-    double toBalance = [self.balance[toCurrency] doubleValue];
+    NSDecimalNumber *fromBalance = self.balance[fromCurrency];
+    NSDecimalNumber *toBalance = self.balance[toCurrency];
 
-    if (fromBalance < value) { return NO; }
+    if ([fromBalance compare:value] == NSOrderedAscending) { return NO; }
 
     CurrencyConverter *converter = [[CurrencyConverter alloc] init];
 
-    double toCurrencyValue = [converter value:value inCurrency:fromCurrency convertedTo:toCurrency rateProvider:provider];
+    NSDecimalNumber *toCurrencyValue = [converter value:value inCurrency:fromCurrency convertedTo:toCurrency rateProvider:provider roundScale:2];
 
-    fromBalance -= value;
-    toBalance += toCurrencyValue;
+    fromBalance = [fromBalance decimalNumberBySubtracting:value];
+    toBalance = [toBalance decimalNumberByAdding:toCurrencyValue];
 
     NSMutableDictionary *mutableBalance = [self.balance mutableCopy];
-    mutableBalance[fromCurrency] = [NSNumber numberWithDouble:fromBalance];
-    mutableBalance[toCurrency] = [NSNumber numberWithDouble:toBalance];
+    mutableBalance[fromCurrency] = fromBalance;
+    mutableBalance[toCurrency] = toBalance;
 
     _balance = [NSDictionary dictionaryWithDictionary:mutableBalance];
     return YES;
@@ -51,19 +54,25 @@
 
 - (BOOL)canPerformTransactionFromCurrency:(Currency *)fromCurrency
                                     to:(Currency *)toCurrency
-                  valueInFirstCurrency:(double)value
+                  valueInFirstCurrency:(NSDecimalNumber *)value
                           rateProvider:(CurrencyRateProvider *)provider {
 
     if ([fromCurrency isEqual:toCurrency]) { return NO; }
 
-    double fromBalance = [self.balance[fromCurrency] doubleValue];
+    NSDecimalNumber *fromBalance = self.balance[fromCurrency];
 
-    if (fromBalance < value) { return NO; }
+    if ([fromBalance compare:value] == NSOrderedAscending) { return NO; }
 
     CurrencyConverter *converter = [[CurrencyConverter alloc] init];
-    double toCurrencyValue = [converter value:value inCurrency:fromCurrency convertedTo:toCurrency rateProvider:provider];
+    NSDecimalNumber *fromValueInUSD = [converter value:value
+                                            inCurrency:fromCurrency
+                                           convertedTo:[Currency usdCurrency]
+                                          rateProvider:provider
+                                            roundScale:2];
 
-    if (toCurrencyValue < 0.01 || value < 0.01) { return NO; }
+    if ([fromValueInUSD compare:[NSDecimalNumber one]] == NSOrderedAscending) {
+        return NO;
+    }
 
     return YES;
 }

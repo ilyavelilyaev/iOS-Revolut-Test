@@ -12,10 +12,11 @@
 
 @interface CurrencyConverter : NSObject
 
-- (double)value:(double)value
-    inCurrency:(Currency *)currency
-   convertedTo:(Currency *)secondCurrency
-  rateProvider:(CurrencyRateProvider *)provider;
+- (NSDecimalNumber *)value:(NSDecimalNumber *)value
+                inCurrency:(Currency *)currency
+               convertedTo:(Currency *)secondCurrency
+              rateProvider:(CurrencyRateProvider *)provider
+                roundScale:(NSInteger)scale;
 
 
 @end
