@@ -23,15 +23,17 @@
     NSDecimalNumber *secondRate = [provider rateForCurrency:secondCurrency];
 
     if (!firstRate || !secondRate) return nil;
+    NSDecimalNumberHandler *handler = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers
+                                                                                             scale:scale
+                                                                                  raiseOnExactness:NO
+                                                                                   raiseOnOverflow:NO
+                                                                                  raiseOnUnderflow:NO
+                                                                               raiseOnDivideByZero:NO];
+    
+    NSDecimalNumber *result = [[value decimalNumberByDividingBy:firstRate withBehavior:handler]
+                               decimalNumberByMultiplyingBy:secondRate withBehavior:handler];
 
-    NSDecimalNumber *result = [[value decimalNumberByDividingBy:firstRate] decimalNumberByMultiplyingBy:secondRate];
-
-    NSDecimal decimalBeforeRounding = [result decimalValue];
-    NSDecimal decimalAfterRounding;
-
-    NSDecimalRound(&decimalAfterRounding, &decimalBeforeRounding, scale, NSRoundBankers);
-
-    return [NSDecimalNumber decimalNumberWithDecimal:decimalAfterRounding];
+    return result;
 }
 
 
