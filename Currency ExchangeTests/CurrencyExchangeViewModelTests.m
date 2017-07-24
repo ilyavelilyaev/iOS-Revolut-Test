@@ -210,13 +210,13 @@
     [self.viewModel updatedTopTextAt:0 text:@"100"];
     XCTAssert([self.viewModel canExchange]);
 
-        //5: Should be able to exchange minimum value if it will be more than $1
+        //5: Should be able to exchange minimum value if it will be more than $0.1
             // find USD & exchange
     int count = (int)[self.viewModel amountOfPages];
     for (int i = 0; i < count; i++) {
         if ([[self.viewModel titleForPageAtIdx:i] isEqualToString:@"USD"]) {
             [self.viewModel updatedCurrentTopPage:i];
-            [self.viewModel updatedTopTextAt:i text:@"1"];
+            [self.viewModel updatedTopTextAt:i text:@"0.1"];
             break;
         }
     }
@@ -230,12 +230,12 @@
 
     XCTAssert([self.viewModel canExchange]);
 
-        //6: Should not be able opposite exchange less than $1
-            // find USD & Enter minimum amount in USD (0.99)
+        //6: Should not be able opposite exchange less than $0.1
+            // find USD & Enter minimum amount in USD (0.09)
     for (int i = 0; i < count; i++) {
         if ([[self.viewModel titleForPageAtIdx:i] isEqualToString:@"USD"]) {
             [self.viewModel updatedCurrentTopPage:i];
-            [self.viewModel updatedTopTextAt:i text:@"0.99"];
+            [self.viewModel updatedTopTextAt:i text:@"0.09"];
             break;
         }
     }

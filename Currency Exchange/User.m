@@ -70,7 +70,8 @@
                                           rateProvider:provider
                                             roundScale:2];
 
-    if ([fromValueInUSD compare:[NSDecimalNumber one]] == NSOrderedAscending) {
+    NSDecimalNumber *zeroPointOne = [NSDecimalNumber decimalNumberWithMantissa:1 exponent:-1 isNegative:NO];
+    if ([fromValueInUSD compare:zeroPointOne] == NSOrderedAscending) {
         return NO;
     }
 
