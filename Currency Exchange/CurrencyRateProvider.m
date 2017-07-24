@@ -58,10 +58,10 @@
     [self.fetcher loadCurrenciesWithCompletion:^(NSDictionary * _Nullable currencyRateDictionary) {
         @strongify(self)
         self.cache = currencyRateDictionary;
-        [self.delegate rateProviderUpdatedCurrencyRates:self];
         if (currencyRateDictionary && [currencyRateDictionary count] > 0) {
             _ratesLoaded = YES;
         }
+        [self.delegate rateProviderUpdatedCurrencyRates:self];
     }];
 }
 
