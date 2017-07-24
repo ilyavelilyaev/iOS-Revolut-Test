@@ -113,6 +113,7 @@
     objectsCount = [self.dataSource amountOfPages:self];
     isActive = [self.dataSource isEditingActive:self];
     [self configureVisibleCells];
+    [self updateFirstResponder];
 }
 
 
